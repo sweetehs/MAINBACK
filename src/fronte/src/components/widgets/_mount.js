@@ -5,12 +5,12 @@ export function mount($wrapper, id, option, store) {
 		// 添加数据
 		let $div = document.createElement("div")
 		let $div1 = document.createElement("div")
-		if(option.layout == "layout"){
+		if (option.layout == "layout") {
 			$div.className = id
-		}else{
+		} else {
 			$div.className = "widget-item " + id
 		}
-		
+
 		$div.appendChild($div1);
 		$item = $div1
 		$wrapper.appendChild($div)
@@ -18,12 +18,14 @@ export function mount($wrapper, id, option, store) {
 		$item = $item[0].children[0]
 	}
 	// 生产item	
+	debugger
 	new Vue({
 		template: `<div @click="view">${option.tmp(option.data)}</div>`,
 		el: $item,
 		data() {
 			return {
-				id: id
+				id: id,
+				test: "test"
 			}
 		},
 		methods: {
@@ -51,7 +53,10 @@ export function mount($wrapper, id, option, store) {
 						}
 					}
 				})
-
+			},
+			drop1(params) {
+				alert(1)
+				debugger
 			}
 		}
 	});

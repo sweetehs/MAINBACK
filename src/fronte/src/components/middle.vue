@@ -28,7 +28,7 @@
 			return {};
 		},		
 		methods: {
-			drop(params) {				
+			drop(params) {
 				const data = widgetConfig[params.data]()
 				const id = getId()
 				mount(params.el.children[0],id,data)

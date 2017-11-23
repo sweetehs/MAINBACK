@@ -9,10 +9,10 @@ export default function init() {
         layout: 'layout',
         staticConfig: staticConfig,
         tmp: (option = {}) => {
-            return `<Droppable><Layout></Layout></Droppable>`
+            return `<Droppable :test="test" @drop="drop1"><Layout></Layout></Droppable>`
         },
         view: () => {            
-            return `<Layoutview v-on:changeStatus="changeStatus" :defaultData="defaultData" :staticConfig="staticConfig"></Layoutview>`
+            return `<Layoutview @changeStatus="changeStatus" :defaultData="defaultData" :staticConfig="staticConfig"></Layoutview>`
         }
     }
 }
