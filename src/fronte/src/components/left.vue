@@ -5,8 +5,17 @@
 <template>
   <div class="left-warpper">
       <Draggable data="button">
-          <el-button type="primary">主要按钮</el-button>
+          <el-button>按钮</el-button>
       </Draggable>      
+      <Draggable data="radio">
+           <el-radio>单选</el-radio>
+      </Draggable>  
+      <Draggable data="input">
+           <el-input :readonly="true"></el-input>
+      </Draggable>  
+      <Draggable data="layout">
+           <div>一列布局</div>
+      </Draggable>  
   </div>
 </template>
 <script>

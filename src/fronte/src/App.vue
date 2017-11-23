@@ -23,7 +23,7 @@ div {
 .main-right {
   padding: 10px;
   border-left: 1px solid #abc;
-  width: 300px;
+  width: 400px;
 }
 .main-middle {
   padding: 10px;

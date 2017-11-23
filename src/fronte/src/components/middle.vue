@@ -1,47 +1,38 @@
-<style lang="less" scoped>
-	.middle-wrapper,
-	.middle-inner {
+<style lang="less">
+	.middle-wrapper,.middle-inner{
 		height: 100%;
 	}
+	.widget-item {
+		display: inline-block;
+	}	
 </style>
 
 <template>
 	<div class="middle-wrapper">
 		<Droppable @drop="drop">
 			<div class="middle-inner"></div>
-		</Droppable>
+		</Droppable>		
 	</div>
 </template>
 
-<script>
-	import Droppable from "./util/droppable";
-	import widgetConfig from "./widgets/Config";
+<script>	
+	import widgetConfig from "./widgets/_config";
 	import {
 		mount
-	} from "./util/mount";
-	const $div = () => {
-		let id = 'div' + parseInt(Math.random() * 100000000)
-		let div = document.createElement('div')
-		div.id = id
-		return {
-			id: id,
-			div: div
-		}
+	} from "./widgets/_mount";
+	const getId = () => {
+		return 'c' + parseInt(Math.random() * 100000000)		
 	}
 	export default {
 		data() {
 			return {};
-		},
+		},		
 		methods: {
-			drop(params) {
-				mount(
-					document.getElementsByClassName("middle-inner")[0],
-					widgetConfig[params.data]
-				);
+			drop(params) {				
+				const data = widgetConfig[params.data]()
+				const id = getId()
+				mount(params.el.children[0],id,data)
 			}
-		},
-		components: {
-			Droppable: Droppable
-		}
-	};
+		}		
+	}
 </script>

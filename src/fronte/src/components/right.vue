@@ -3,10 +3,20 @@
 .right-inner {
   height: 100%;
 }
-label {
-  margin-right: 10px;
-  width: 70px;
+.right-form-item{
+  margin: 10px 0;
+  header{
+    margin-bottom: 10px;
+  }
+  label {
+    margin-right: 10px;
+    width: 70px;
+  }
+  input{
+    margin-bottom: 5px;
+  }
 }
+
 </style>
 
 <template>
