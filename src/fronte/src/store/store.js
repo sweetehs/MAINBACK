@@ -3,20 +3,40 @@ import Vuex from "vuex";
 
 
 Vue.use(Vuex);
+/*
+    widgets:[{
+        id:'',
+        name:'',
+        data:'',        
+        children:[],
+        vue:''
+    }]
+*/
+const widgetsFind = []
 const store = new Vuex.Store({
     state: {
-        list: []
+        widgets: []
+    },
+    getters: {
+        getById: (state, getters) => (id) => {
+            return widgetsFind.filter((_data) => {
+                return _data.id == id
+            })
+        }
     },
     mutations: {
-        addList(state, data) {
-                        
+        add(state, data) {
+            state.widgets.push(data)
+            widgetsFind.push(data)
         }
     },
     actions: {
-        addList(context, data) {            
-           
+        add(context, data) {
+            const _data = this.getters.getById(data.id)
+            if (_data.length == 0) {
+                context.commit("add", data)
+            }
         }
-    },
-    getters: {}
+    }
 })
 export default store

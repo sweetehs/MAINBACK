@@ -5,6 +5,12 @@
 	.widget-item {
 		display: inline-block;
 	}	
+	.widget-layout{
+		height: 100%;
+		>div{
+			height:100%;
+		}
+	}
 </style>
 
 <template>
@@ -16,22 +22,23 @@
 </template>
 
 <script>	
-	import widgetConfig from "./widgets/_config";
+	import widgetConfig from "./widgets/config";
+	import util from "./util/util"
 	import {
 		mount
-	} from "./widgets/_mount";
-	const getId = () => {
-		return 'c' + parseInt(Math.random() * 100000000)		
-	}
+	} from "./widgets/mount";	
 	export default {
 		data() {
 			return {};
 		},		
+		mounted(){
+			
+		},
 		methods: {
 			drop(params) {
 				const data = widgetConfig[params.data]()
-				const id = getId()
-				mount(params.el.children[0],id,data)
+				const id = util.randomid()
+				mount(params.el.children[0],id,data,this.$store)
 			}
 		}		
 	}

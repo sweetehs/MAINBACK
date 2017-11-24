@@ -12,7 +12,7 @@ import './assets/reset.less'
 import './assets/out.less'
 import './assets/ele.less'
 
-import Widget from './components/widgets/_install'
+import Widget from './components/widgets/install'
 import store from './store/store'
 Vue.use(ElementUI)
 Vue.use(Widget)

@@ -1,12 +1,14 @@
 import Vue from 'vue'
-export function mount($wrapper, id, option, store) {
+import util from '../util/util'
+import widgetConfig from "./config";
+export function mount($wrapper, id, option, $store) {
 	var $item = document.getElementsByClassName(id)
 	if ($item.length == 0) {
 		// 添加数据
 		let $div = document.createElement("div")
 		let $div1 = document.createElement("div")
 		if (option.layout == "layout") {
-			$div.className = id
+			$div.className = "widget-layout " + id
 		} else {
 			$div.className = "widget-item " + id
 		}
@@ -17,19 +19,17 @@ export function mount($wrapper, id, option, store) {
 	} else {
 		$item = $item[0].children[0]
 	}
-	// 生产item	
-	debugger
-	new Vue({
-		template: `<div @click="view">${option.tmp(option.data)}</div>`,
+	// 生产item
+	let _vue = new Vue({
+		template: `<div @click="view">${option.tmp()}</div>`,
 		el: $item,
 		data() {
 			return {
-				id: id,
-				test: "test"
+				defaultData: option.data
 			}
 		},
 		methods: {
-			view() {
+			view(event) {
 				const id = this.id
 				// 生产设置				
 				let $rightinner = document.getElementsByClassName("right-inner")[0]
@@ -47,17 +47,26 @@ export function mount($wrapper, id, option, store) {
 					},
 					methods: {
 						changeStatus(data) {
-							// 刷新子元素
-							option.data = data
-							mount($wrapper, id, option)
+
 						}
 					}
 				})
+				event.cancelBubble = true;
 			},
-			drop1(params) {
-				alert(1)
-				debugger
+			drop(params) {
+				const data = widgetConfig[params.data]()
+				const id = util.randomid()
+				mount(params.el.children[0], id, data)
 			}
 		}
 	});
+	// // 储存数据
+	// const storeData = {
+	// 	id: id,
+	// 	name: option.name,
+	// 	data: option.data,
+	// 	children: [],
+	// 	vue: _vue
+	// }
+	// $store.dispatch("add", storeData);
 }

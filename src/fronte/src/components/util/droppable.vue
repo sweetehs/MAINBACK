@@ -43,8 +43,7 @@
     methods: {
       init() {
         let self = this;
-        /* eslint-disable no-new */
-        debugger
+        /* eslint-disable no-new */        
         new Drop(this.$el, {
           onDragStart(params) {
             self.$emit("dragstart", params);
