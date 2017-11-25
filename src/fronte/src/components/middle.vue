@@ -15,6 +15,10 @@
 	.widget-layout{
 		box-sizing: border-box
 	}
+	.layout-wrapper{
+		background: #eee;
+		box-shadow: 0 0 10px #888;
+	}
 </style>
 
 <template>
@@ -23,7 +27,7 @@
 	</div>
 </template>
 
-<script>	
+<script>
 	import widgetConfig from "./widgets/config";
 	import util from "./util/util"
 	import {

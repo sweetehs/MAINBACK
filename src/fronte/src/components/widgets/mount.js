@@ -44,19 +44,21 @@ export function mount($wrapper, id, option, $store) {
 		},
 		methods: {
 			changeStatus(data) {
-				// 如果是layout样式变化。则需要将父元素也重置样式 尤其是flex
-				// debugger;
+				// 如果是layout样式变化。则需要将父元素子元素也重置样式 尤其是flex				
 				if (option.name.indexOf("layout") !== -1) {
 					let $widgtParent = this.$el.parentElement
 					let $dndParent = this.$el.children[0]
 					for (var i in data.styles) {
 						$widgtParent.style[i] = data.styles[i]
-						$dndParent.style[i] = data.styles[i]
+						$dndParent.style[i] = data.styles[i];
+						// dnd不能设置width或者height
+						$dndParent.style.width = "100%";
+						$dndParent.style.height = "100%";
 					}
 				}
 			},
 			view(event) {
-				const id = this.id
+				const id = this.id				
 				// 生产设置				
 				let $rightinner = document.getElementsByClassName("right-inner")[0]
 				let $div = document.createElement("div")
