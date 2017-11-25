@@ -8,7 +8,7 @@ export default function init() {
             num: [{
                 width: "",
                 flex: 1
-            }],
+            }],            
             styles: {
                 height: "100%",
                 width: "100%"
