@@ -1,4 +1,11 @@
 <style lang="less">
+	.dnd-drop-content{
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+	}
 	.middle-wrapper,.middle-inner{
 		height: 100%;
 	}
@@ -6,18 +13,13 @@
 		display: inline-block;
 	}	
 	.widget-layout{
-		height: 100%;
-		>div{
-			height:100%;
-		}
+		box-sizing: border-box
 	}
 </style>
 
 <template>
-	<div class="middle-wrapper">
-		<Droppable @drop="drop">
-			<div class="middle-inner"></div>
-		</Droppable>		
+	<div class="middle-wrapper">		
+		<Droppable @drop="drop"></Droppable>			
 	</div>
 </template>
 
@@ -29,7 +31,12 @@
 	} from "./widgets/mount";	
 	export default {
 		data() {
-			return {};
+			return {
+				styles:{
+					height:"100%",
+					width:"100%"
+				}
+			};
 		},		
 		mounted(){
 			
@@ -38,7 +45,7 @@
 			drop(params) {
 				const data = widgetConfig[params.data]()
 				const id = util.randomid()
-				mount(params.el.children[0],id,data,this.$store)
+				mount(params.el,id,data,this.$store)
 			}
 		}		
 	}

@@ -1,18 +1,24 @@
 <template>
     <div>        
         <div class="right-form-item" v-if="defaultData.text">
-            <header>文字</header><el-input v-model="defaultData.text" @change="changeStatus" placeholder="请输入内容"></el-input>           
+            <span class="text">文字：</span>
+            <div class="content">
+                <el-input v-model="defaultData.text" @change="changeStatus" placeholder="请输入内容"></el-input>           
+            </div>            
         </div>
-        <div class="right-form-item" v-if="defaultData.placeholder">
-            <header>placeholder</header><el-input v-model="defaultData.placeholder" @change="changeStatus" placeholder="请输入内容"></el-input>           
+        <div class="right-form-item " v-if="defaultData.placeholder">
+            <span class="text">pholder：</span>            
+            <div class="content">
+                <el-input v-model="defaultData.placeholder" @change="changeStatus" placeholder="请输入内容"></el-input>           
+            </div>             
         </div>
-        <div>           
-        </div>
-        <div v-for="(item,key) in staticConfig1" :key="key" class="right-form-item">
-            <header>{{key}}</header>
-            <label v-for="(item1,key1) in item" :key="key1">
+        <div v-for="(item,key) in staticConfig1" :key="key" class="right-form-item fs">
+            <span class="text">{{key}}：</span>
+            <div class="content">
+                <label v-for="(item1,key1) in item" :key="key1">
                   <el-radio @change="changeStatus" v-model="defaultData[key]" :label="item1">{{item1}}</el-radio>
-              </label>
+                 </label>
+            </div>            
         </div>         
         <Stylec @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>        
     </div>

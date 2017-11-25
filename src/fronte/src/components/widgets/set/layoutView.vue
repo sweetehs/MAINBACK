@@ -1,21 +1,33 @@
 <style scoped>
-    .el-input{
-        width: 100px;
-        margin: 0 10px;
-    }
+    
 </style>
 
 <template>
     <div>
         <div class="right-form-item">
-            <header>栏数</header>
-            <el-input v-model="num" @change="changeStatus"></el-input>           
-        </div>
-        <header>栏宽</header>
-        <div class="right-form-item" v-for="(item,index) in defaultData.num" :key="index">            
-            px:<el-input v-model="defaultData.num[index].width" @change="changeStatus"></el-input>
-            flex:<el-input v-model="defaultData.num[index].flex" @change="changeStatus"></el-input>  
-        </div>
+            <span class="text">是否弹性：</span>
+            <div class="content">
+                <label>
+                    <el-radio @change="changeStatus" v-model="isFlex" label="true">是</el-radio>
+                </label>
+                <label>
+                    <el-radio @change="changeStatus" v-model="isFlex" label="false">否</el-radio>              
+                </label>                
+            </div>           
+        </div> 
+        <div class="right-form-item">
+            <span class="text">弹性盒子：</span>
+            <div class="content">
+                <el-input @change="changeStatus" size="small" v-model="flex"></el-input>              
+            </div>           
+        </div> 
+        <div class="right-form-item">
+            <span class="text">盒子方向：</span>
+            <div class="content">
+                <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="column">纵向</el-radio>
+                <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="row">横向</el-radio>                
+            </div>           
+        </div> 
         <Stylec @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>
     </div>
 </template>
@@ -25,26 +37,14 @@
     import util from "../../util/util"
     export default {
         data() {                        
-            return {                                
-               num:1
+            return {                             
+                isFlex: this.defaultData.styles.width == "auto" ? "true" : "false",   
+                flex: this.defaultData.styles.flex
             };
         },       
         watch:{
-            num(a,b){
-                b = b||1
-                if(a>b){
-                    for(var i=0;i<a-b;i++){
-                        this.defaultData.num.push({
-                            width:"",
-                            flex:1
-                        })
-                    }
-                    
-                }else{
-                    for(var i=0;i<b-a;i++){
-                        this.defaultData.num.pop()
-                    }
-                }                
+            flex(){
+                
             }
         },
         props:['defaultData','staticConfig'],
@@ -52,10 +52,16 @@
             Stylec:Stylec
         },
         methods:{
-            changeStatus(data){
-                 if(util.isObject(data)){
-                    this.defaultData.styles = data;                    
+            changeStatus(data){                               
+                if(util.isObject(data)){
+                    Object.assign(this.defaultData.styles,data)                                        
                 }     
+                if(this.isFlex === "true"){
+                    this.defaultData.styles.flex = this.flex;
+                    this.defaultData.styles.width = "auto"
+                }else{
+                     this.defaultData.styles.flex = "none";                     
+                }
                 this.$emit("changeStatus",this.defaultData)            
             }
         }

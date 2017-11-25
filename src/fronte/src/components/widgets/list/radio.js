@@ -5,6 +5,7 @@ const staticConfig = {
 }
 export default function init() {
     return {
+        name: "el-radio",
         data: {
             text: '选项',
             border: false,

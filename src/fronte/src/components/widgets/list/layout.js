@@ -5,22 +5,18 @@ export default function init() {
     return {
         name: "layout",
         data: {
-            num: [{
-                width: "",
-                flex: 1
-            }],            
             styles: {
                 height: "100%",
-                width: "100%"
+                width: "100%",
+                flex: 1,
+                "flex-direction": "column"
             }
         },
         layout: 'layout',
         staticConfig: staticConfig,
         tmp: () => {
-            return `<Layout :style='defaultData.styles' :num="defaultData.num">
-                        <Droppable slot="item" slot-scope="props" @drop="drop" :style="props.styles">
-                            <div class="layout-item" :style="props.styles"></div>
-                        </Droppable>
+            return `<Layout :style='defaultData.styles'>
+                        <Droppable @drop="drop"></Droppable>
                     </Layout>`
         },
         view: () => {

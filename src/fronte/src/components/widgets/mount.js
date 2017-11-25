@@ -21,14 +21,40 @@ export function mount($wrapper, id, option, $store) {
 	}
 	// 生产item
 	let _vue = new Vue({
-		template: `<div @click="view">${option.tmp()}</div>`,
+		template: option.tmp(),
 		el: $item,
 		data() {
 			return {
 				defaultData: option.data
 			}
 		},
+		mounted() {
+			this.$el.addEventListener("click", (event) => {
+				this.view(event)
+			})
+			this.changeStatus(this.defaultData)
+		},
+		watch: {
+			defaultData: {
+				handler() {
+					this.changeStatus(this.defaultData)
+				},
+				deep: true
+			}
+		},
 		methods: {
+			changeStatus(data) {
+				// 如果是layout样式变化。则需要将父元素也重置样式 尤其是flex
+				// debugger;
+				if (option.name.indexOf("layout") !== -1) {
+					let $widgtParent = this.$el.parentElement
+					let $dndParent = this.$el.children[0]
+					for (var i in data.styles) {
+						$widgtParent.style[i] = data.styles[i]
+						$dndParent.style[i] = data.styles[i]
+					}
+				}
+			},
 			view(event) {
 				const id = this.id
 				// 生产设置				
@@ -56,7 +82,7 @@ export function mount($wrapper, id, option, $store) {
 			drop(params) {
 				const data = widgetConfig[params.data]()
 				const id = util.randomid()
-				mount(params.el.children[0], id, data)
+				mount(params.el, id, data)
 			}
 		}
 	});
