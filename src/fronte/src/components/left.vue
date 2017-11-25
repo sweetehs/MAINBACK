@@ -15,10 +15,7 @@
 		</Draggable>
 		<Draggable data="layout">
 			<div>一列布局</div>
-		</Draggable>
-		<Draggable data="layout2">
-			<div>两列布局</div>
-		</Draggable>
+		</Draggable>		
 	</div>
 </template>
 
