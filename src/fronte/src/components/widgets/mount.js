@@ -21,15 +21,22 @@ export function mount($wrapper, id, option, $store) {
 	}
 	// 生产item
 	let _vue = new Vue({
-		template: `<div @click="view">${option.tmp()}</div>`,
+		template: option.tmp(),
 		el: $item,
 		data() {
 			return {
 				defaultData: option.data
 			}
 		},
+		mounted() {
+			this.$el.addEventListener("click", (event) => {
+				debugger;
+				this.view(event)
+			})
+		},
 		methods: {
 			view(event) {
+				debugger;
 				const id = this.id
 				// 生产设置				
 				let $rightinner = document.getElementsByClassName("right-inner")[0]
@@ -56,7 +63,7 @@ export function mount($wrapper, id, option, $store) {
 			drop(params) {
 				const data = widgetConfig[params.data]()
 				const id = util.randomid()
-				mount(params.el.children[0], id, data)
+				mount(params.el, id, data)
 			}
 		}
 	});

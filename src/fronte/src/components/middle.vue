@@ -5,19 +5,14 @@
 	.widget-item {
 		display: inline-block;
 	}	
-	.widget-layout{
+	.widget-layout:first-of-type{
 		height: 100%;
-		>div{
-			height:100%;
-		}
 	}
 </style>
 
 <template>
 	<div class="middle-wrapper">
-		<Droppable @drop="drop">
-			<div class="middle-inner"></div>
-		</Droppable>		
+		<Droppable @drop="drop"></Droppable>		
 	</div>
 </template>
 
@@ -38,7 +33,7 @@
 			drop(params) {
 				const data = widgetConfig[params.data]()
 				const id = util.randomid()
-				mount(params.el.children[0],id,data,this.$store)
+				mount(params.el,id,data,this.$store)
 			}
 		}		
 	}
