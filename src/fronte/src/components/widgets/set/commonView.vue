@@ -20,7 +20,7 @@
                  </label>
             </div>            
         </div>         
-        <Stylec @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>        
+        <Stylec @changeStatus="changeStatus" :styles="defaultData.styles" :disabled="{}"></Stylec>        
     </div>
 </template>
 

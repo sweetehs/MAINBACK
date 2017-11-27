@@ -1,4 +1,25 @@
-export default {
+var dom = {
+    getParentByClassName($dom, className) {
+        var $parent = $dom.parentElement
+        if(!$parent){
+            return 
+        }
+        if ($parent.className.indexOf(className) !== -1) {
+            return $parent
+        } else {
+            return dom.getParentByClassName($parent, className)
+        }
+    }
+}
+var type = {
+    isArray(a) {
+        return Object.prototype.toString.call(a) === "[object Array]";
+    },
+    isObject(a) {
+        return Object.prototype.toString.call(a) === "[object Object]";
+    }
+}
+export default Object.assign({
     randomid() {
         return 'c' + parseInt(Math.random() * 100000000)
     },
@@ -11,11 +32,5 @@ export default {
             }
         }
         return temp;
-    },
-    isArray(a) {
-        return Object.prototype.toString.call(a) === "[object Array]";
-    },
-    isObject(a) {
-        return Object.prototype.toString.call(a) === "[object Object]";
     }
-}
+}, dom, type)

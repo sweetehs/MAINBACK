@@ -5,6 +5,9 @@ export default function init() {
     return {
         name: "layout",
         data: {
+            temp: {
+               
+            },
             styles: {
                 height: "100%",
                 width: "100%",
@@ -20,7 +23,7 @@ export default function init() {
                     </Layout>`
         },
         view: () => {
-            return `<Layoutview @changeStatus="changeStatus" :defaultData="defaultData" :staticConfig="staticConfig"></Layoutview>`
+            return `<Layoutview @changeStatus="changeStatus" :pvue="pvue" :defaultData="defaultData" :staticConfig="staticConfig"></Layoutview>`
         }
     }
 }

@@ -18,24 +18,30 @@ const store = new Vuex.Store({
         widgets: []
     },
     getters: {
-        getById: (state, getters) => (id) => {
+        getById: (state, getters) => (pid) => {
             return widgetsFind.filter((_data) => {
-                return _data.id == id
+                return _data.id == pid
             })
         }
+
     },
     mutations: {
         add(state, data) {
-            state.widgets.push(data)
-            widgetsFind.push(data)
+            if (data.pdata) {
+                data.pdata.children.push(data.data)
+            } else {
+                state.widgets.push(data.data)
+            }
+            widgetsFind.push(data.data)
         }
     },
     actions: {
         add(context, data) {
-            const _data = this.getters.getById(data.id)
-            if (_data.length == 0) {
-                context.commit("add", data)
-            }
+            const pdata = this.getters.getById(data.pid)[0]
+            context.commit("add", {
+                data: data,
+                pdata: pdata
+            })
         }
     }
 })

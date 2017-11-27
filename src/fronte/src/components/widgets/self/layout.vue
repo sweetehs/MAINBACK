@@ -1,7 +1,5 @@
 <style lang="less">
-    .layout-wrapper {
-        border: 1px solid #eee;
-        border-radius: 10px;
+    .layout-wrapper {                
         height: 100%;
         box-sizing: border-box;
         padding: 10px;

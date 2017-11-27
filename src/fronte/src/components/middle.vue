@@ -8,16 +8,19 @@
 	}
 	.middle-wrapper,.middle-inner{
 		height: 100%;
-	}
+	}	
 	.widget-item {
 		display: inline-block;
 	}	
 	.widget-layout{
-		box-sizing: border-box
-	}
-	.layout-wrapper{
-		background: #eee;
-		box-shadow: 0 0 10px #888;
+		box-sizing: border-box;		
+		background: #FFFAFA;
+		border-radius: 10px;
+		border: 1px solid #333;
+		display: flex;
+		&.active{
+			background: #FFEBCD;
+		}
 	}
 </style>
 

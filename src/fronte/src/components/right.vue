@@ -12,11 +12,7 @@
   }
   header{
     margin-bottom: 10px;
-  }
-  label {
-    margin-right: 10px;
-    width: 70px;
-  }
+  }  
   input{
     margin-bottom: 5px;
   }
@@ -27,6 +23,10 @@
   }
   div.content{
    flex: 1;
+    >label {
+      margin-right: 10px;
+      width: 70px;
+    }
   }
 }
 
