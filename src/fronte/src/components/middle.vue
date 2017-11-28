@@ -64,7 +64,7 @@
 						mount($wrapper,_data.id, widgetConfig[_data.option.name](),this.$store,true)						
 					}else{
 						let $wrapper = document.querySelector("." + _data.pid + " .dnd-drop-content")						
-						mount($wrapper,_data.id, widgetConfig[_data.option.name](),this.$store,true)						
+						mount($wrapper,_data.id, Object.assign(widgetConfig[_data.option.name](),_data.option),this.$store,true)						
 					}
 				})
 			}			

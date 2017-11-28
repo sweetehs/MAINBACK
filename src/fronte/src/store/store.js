@@ -4,15 +4,16 @@ import Util from "../components/util/util"
 
 Vue.use(Vuex);
 const localWidgets = localStorage.getItem("auto-produce-system") ? JSON.parse(localStorage.getItem("auto-produce-system")) : []
+console.log(JSON.parse(JSON.stringify(localWidgets)))
 const store = new Vuex.Store({
     plugins: [(store) => {
-        store.subscribe((mutation, state) => {            
+        store.subscribe((mutation, state) => {
             localStorage.setItem("auto-produce-system", JSON.stringify(state.widgets))
-            console.log(JSON.stringify(state.widgets))
+            console.log(JSON.parse(JSON.stringify(state.widgets)))
         })
     }],
     state: {
-        widgets: [] || localWidgets
+        widgets: localWidgets
     },
     getters: {
         getById: (state, getters) => (id) => {
@@ -27,11 +28,12 @@ const store = new Vuex.Store({
     },
     mutations: {
         add(state, data) {
-            if (data.pdata) {
-                data.pdata.children.push(data.data)
+            const pdata = this.getters.getById(data.pid)
+            if (pdata) {
+                pdata.children.push(data)
             } else {
-                state.widgets.push(data.data)
-            }            
+                state.widgets.push(data)
+            }
         },
         update(state, data) {
             const gdata = this.getters.getById(data.id)
@@ -40,11 +42,7 @@ const store = new Vuex.Store({
     },
     actions: {
         add(context, data) {
-            const pdata = this.getters.getById(data.pid)
-            context.commit("add", {
-                data: data,
-                pdata: pdata
-            })
+            context.commit("add", data)
         },
         update(context, data) {
             context.commit("update", data)
