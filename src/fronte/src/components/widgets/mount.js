@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import util from '../util/util'
 import widgetConfig from "./config";
-export function mount($wrapper, id, option, $store) {
+export function mount($wrapper, id, option, $store, notSave) {
 	var $pWrapper = util.getParentByClassName($wrapper, "widget-wrapper")
 	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""
 	// 得到父级的vm
@@ -88,7 +88,11 @@ export function mount($wrapper, id, option, $store) {
 					},
 					methods: {
 						changeStatus(data) {
-
+							// 保存数据
+							$store.dispatch("update", {
+								id: id,
+								data: data
+							})
 						}
 					}
 				})
@@ -107,16 +111,18 @@ export function mount($wrapper, id, option, $store) {
 		el: $action,
 		data() {
 			return {
-				
+
 			}
 		}
 	})
 	//  储存数据
-	const storeData = {
-		id: id,
-		pid: pid,
-		option: option,		
-		children: []
+	if (!notSave) {
+		const storeData = {
+			id: id,
+			pid: pid,
+			option: option,
+			children: []
+		}
+		$store.dispatch("add", storeData)
 	}
-	$store.dispatch("add", storeData);	
 }

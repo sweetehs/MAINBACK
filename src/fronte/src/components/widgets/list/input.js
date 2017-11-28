@@ -5,7 +5,7 @@ const staticConfig = {
 }
 export default function init() {
     return {
-        name: 'el-input',
+        name: 'input',
         data: {
             placeholder: "请输入文字",
             type: "input",

@@ -5,7 +5,7 @@ const staticConfig = {
 }
 export default function init() {
     return {
-        name: 'el-button',
+        name: 'button',
         data: {
             type: 'type',
             color: 'primary',

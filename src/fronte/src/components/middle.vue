@@ -55,27 +55,19 @@
 		},		
 		mounted(){			
 			if(this.$store.state.widgets.length == 0){
-				this.drop({
-					el:document.getElementsByClassName("middle-wrapper")[0],
-					data:"layout"
-				})
+				let $wrapper = document.getElementsByClassName("middle-wrapper")[0]
+				mount($wrapper,util.randomid(), widgetConfig["layout"](),this.$store)
 			}else{
-				util.loop(this.$store.state.widgets,(_data)=>{
-					if(!_data.pid){
-						this.drop({
-							el:document.getElementsByClassName("middle-wrapper")[0],
-							data:"layout"
-						})
+				util.loop(this.$store.state.widgets,(_data)=>{					
+					if(!_data.pid){						
+						let $wrapper = document.getElementsByClassName("middle-wrapper")[0]
+						mount($wrapper,_data.id, widgetConfig[_data.option.name](),this.$store,true)						
+					}else{
+						let $wrapper = document.querySelector("." + _data.pid + " .dnd-drop-content")						
+						mount($wrapper,_data.id, widgetConfig[_data.option.name](),this.$store,true)						
 					}
 				})
 			}			
-		},
-		methods: {
-			drop(params) {
-				const data = widgetConfig[params.data]()
-				const id = util.randomid()
-				mount(params.el,id,data,this.$store)
-			}
-		}		
+		}
 	}
 </script>

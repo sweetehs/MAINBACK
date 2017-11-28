@@ -36,11 +36,10 @@ export default Object.assign({
     loop(list, callback) {
         for (let i = 0; i < list.length; i++) {
             let _data = list[i]
+            callback(_data)
             if (_data.children && _data.children.length !== 0) {
-                this.loop(_data.children)
-            } else {
-                callback(_data)
-            }
+                this.loop(_data.children, callback)
+            }            
         }
     }
 }, dom, type)
