@@ -1,21 +1,18 @@
-import Vue from "vue";
-import Vuex from "vuex";
-
+import Vue from "vue"
+import Vuex from "vuex"
+import Util from "../components/util/util"
 
 Vue.use(Vuex);
-/*
-    widgets:[{
-        id:'',
-        name:'',
-        data:'',        
-        children:[],
-        vue:''
-    }]
-*/
 const widgetsFind = []
+let localWidgets = localStorage.getItem("auto-produce-system")
 const store = new Vuex.Store({
+    plugins: [(store) => {
+        store.subscribe((mutation, state) => {
+            localStorage.setItem("auto-produce-system", JSON.stringify(state.widgets))
+        })
+    }],
     state: {
-        widgets: []
+        widgets: localWidgets ? JSON.parse(localWidgets) : []
     },
     getters: {
         getById: (state, getters) => (pid) => {

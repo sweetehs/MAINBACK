@@ -1,8 +1,8 @@
 var dom = {
     getParentByClassName($dom, className) {
         var $parent = $dom.parentElement
-        if(!$parent){
-            return 
+        if (!$parent) {
+            return
         }
         if ($parent.className.indexOf(className) !== -1) {
             return $parent
@@ -32,5 +32,15 @@ export default Object.assign({
             }
         }
         return temp;
+    },
+    loop(list, callback) {
+        for (let i = 0; i < list.length; i++) {
+            let _data = list[i]
+            if (_data.children && _data.children.length !== 0) {
+                this.loop(_data.children)
+            } else {
+                callback(_data)
+            }
+        }
     }
 }, dom, type)

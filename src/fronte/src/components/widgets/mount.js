@@ -2,32 +2,32 @@ import Vue from 'vue'
 import util from '../util/util'
 import widgetConfig from "./config";
 export function mount($wrapper, id, option, $store) {
-	var $pWrapper = util.getParentByClassName($wrapper, "widget")
+	var $pWrapper = util.getParentByClassName($wrapper, "widget-wrapper")
 	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""
-	var $item = document.getElementsByClassName(id)
-	if ($item.length == 0) {
-		// 添加数据
-		let $div = document.createElement("div")
-		let $div1 = document.createElement("div")
-		if (option.layout == "layout") {
-			$div.className = "widget widget-layout " + id
-		} else {
-			$div.className = "widget widget-item " + id
-		}
-
-		$div.appendChild($div1);
-		$item = $div1
-		$wrapper.appendChild($div)
-	} else {
-		$item = $item[0].children[0]
-	}
-	// 生产item
 	// 得到父级的vm
 	let pvue = $store.getters.getById(pid)[0]
-	debugger;
-	let _vue = new Vue({
+
+	// 添加数据
+	let $div = document.createElement("div")
+	let $widget = document.createElement("div")
+	let $action = document.createElement("div")
+	$div.appendChild($widget)
+	if (option.layout == "layout") {
+		$div.className = "widget-wrapper widget-layout " + id
+	} else {
+		$div.className = "widget-wrapper widget-item " + id
+	}
+	let $ndiv = document.createElement("div")
+	$widget.className = "widget-item-inner"
+	$widget.appendChild($ndiv)
+	$widget.appendChild($action)
+	$widget = $ndiv
+	$wrapper.appendChild($div)
+
+	// create item
+	const _vue = new Vue({
 		template: option.tmp(),
-		el: $item,
+		el: $widget,
 		data() {
 			return {
 				defaultData: option.data
@@ -52,10 +52,12 @@ export function mount($wrapper, id, option, $store) {
 				// 如果是layout样式变化。则需要将父元素子元素也重置样式 尤其是flex				
 				if (option.name.indexOf("layout") !== -1) {
 					let $widgtParent = this.$el.parentElement
+					let $widgtParent1 = $widgtParent.parentElement
 					let $dndParent = this.$el.children[0]
 					for (var i in data.styles) {
 						$widgtParent.style[i] = data.styles[i]
-						$dndParent.style[i] = data.styles[i];
+						$widgtParent1.style[i] = data.styles[i]
+						$dndParent.style[i] = data.styles[i]
 						// dnd不能设置width或者height
 						$dndParent.style.width = "100%";
 						$dndParent.style.height = "100%";
@@ -63,12 +65,12 @@ export function mount($wrapper, id, option, $store) {
 				}
 			},
 			view(event) {
-				var $active = document.querySelectorAll(".widget-layout.active")[0]
+				var $active = document.querySelectorAll(".widget-active")[0]
 				if ($active) {
-					$active.className = $active.className.replace(" active", "")
+					$active.className = $active.className.replace(" widget-active", "")
 				}
-				var $parent = this.$el.parentElement
-				$parent.className = $parent.className + " active"
+				var $parent = this.$el.parentElement.parentElement
+				$parent.className = $parent.className + " widget-active"
 				// 生产设置				
 				let $rightinner = document.getElementsByClassName("right-inner")[0]
 				let $div = document.createElement("div")
@@ -80,16 +82,17 @@ export function mount($wrapper, id, option, $store) {
 					data() {
 						return {
 							staticConfig: option.staticConfig,
-							defaultData: option.data,							
+							defaultData: option.data,
 							pvue: pvue
 						}
 					},
 					methods: {
 						changeStatus(data) {
+
 						}
 					}
 				})
-				event.cancelBubble = true;
+				event.cancelBubble = true
 			},
 			drop(params) {
 				const data = widgetConfig[params.data]()
@@ -97,17 +100,23 @@ export function mount($wrapper, id, option, $store) {
 				mount(params.el, id, data, $store)
 			}
 		}
-	});
-	// // 储存数据
-
+	})
+	// create action
+	new Vue({
+		template: "<Commonaction></Commonaction>",
+		el: $action,
+		data() {
+			return {
+				
+			}
+		}
+	})
+	//  储存数据
 	const storeData = {
 		id: id,
-		name: option.name,
-		data: option.data,
-		children: [],
 		pid: pid,
-		_vue: _vue
+		option: option,		
+		children: []
 	}
-	$store.dispatch("add", storeData);
-
+	$store.dispatch("add", storeData);	
 }

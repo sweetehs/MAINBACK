@@ -9,24 +9,32 @@
 	.middle-wrapper,.middle-inner{
 		height: 100%;
 	}	
-	.widget-item {
-		display: inline-block;
-	}	
-	.widget-layout{
-		box-sizing: border-box;		
-		background: #FFFAFA;
-		border-radius: 10px;
-		border: 1px solid #333;
-		display: flex;
-		&.active{
-			background: #FFEBCD;
+	.widget-wrapper{
+		position: relative;
+		&.widget-item {
+			display: inline-block;
+		}	
+		&.widget-layout{
+			box-sizing: border-box;		
+			background: #FFFAFA;
+			border-radius: 10px;
+			box-shadow: 0 0 4px #333;
+			display: flex;
+			&.widget-active{
+				background: #FFEBCD;
+			}
+		}
+		.widget-item-inner{
+			display: inline-block;
+			position: relative;
 		}
 	}
+	
 </style>
 
 <template>
 	<div class="middle-wrapper">		
-		<Droppable @drop="drop"></Droppable>			
+		<!-- <Droppable @drop="drop"></Droppable> -->
 	</div>
 </template>
 
@@ -45,8 +53,22 @@
 				}
 			};
 		},		
-		mounted(){
-			
+		mounted(){			
+			if(this.$store.state.widgets.length == 0){
+				this.drop({
+					el:document.getElementsByClassName("middle-wrapper")[0],
+					data:"layout"
+				})
+			}else{
+				util.loop(this.$store.state.widgets,(_data)=>{
+					if(!_data.pid){
+						this.drop({
+							el:document.getElementsByClassName("middle-wrapper")[0],
+							data:"layout"
+						})
+					}
+				})
+			}			
 		},
 		methods: {
 			drop(params) {

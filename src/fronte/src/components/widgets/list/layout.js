@@ -6,13 +6,14 @@ export default function init() {
         name: "layout",
         data: {
             temp: {
-               
+                isFlex: true
             },
             styles: {
                 height: "100%",
                 width: "100%",
+                display: "flex",
                 flex: 1,
-                "flex-direction": "column"
+                "flex-direction": "column",                
             }
         },
         layout: 'layout',

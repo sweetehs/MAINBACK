@@ -6,21 +6,21 @@
     <div>       
         <div class="right-form-item">
             <span class="text">
-                <el-checkbox v-model="isFlex" @change="changeStatus"></el-checkbox>
+                <el-checkbox v-model="defaultData.temp.isFlex" @change="changeStatus"></el-checkbox>
                 弹性盒子：
             </span>
             <div class="content">
-                <el-input :disabled="!isFlex" @change="changeStatus" size="small" v-model="defaultData.styles.flex"></el-input>              
+                <el-input :disabled="!defaultData.temp.isFlex" @change="changeStatus" size="small" v-model="defaultData.styles.flex"></el-input>              
             </div>           
         </div> 
         <div class="right-form-item">
-            <span class="text">盒子方向：</span>
+            <span class="text">内容方向：</span>
             <div class="content">
                 <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="column">竖直排列</el-radio>
                 <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="row">水平排列</el-radio>                
             </div>           
         </div> 
-        <Stylec :disabled="disabled" @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>
+        <Stylec v-if="pvue" :disabled="disabled" @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>
     </div>
 </template>
 
@@ -30,7 +30,7 @@
     export default {
         data() {                        
             return {     
-                isFlex:true,
+                isFlex:this.defaultData.temp.isFlex,
                 disabled:{}
             };
         },       
@@ -40,15 +40,17 @@
         components:{
             Stylec:Stylec
         },
-        created(){
+        created(){            
             this.changeDisabled()            
         },
         methods:{
-            changeDisabled(){                         
-                if(!this.pvue || !this.pvue._vue){
-                    return 
-                }         
-                if(this.isFlex){                                             
+            changeDisabled(){
+                if(this.defaultData.temp.isFlex){    
+                    this.defaultData.styles.display = "flex" 
+                    this.defaultData.styles.flex = 1                    
+                    if(!this.pvue || !this.pvue._vue){
+                        return 
+                    }                                              
                     if(this.pvue._vue.defaultData.styles["flex-direction"] == "column"){
                         this.disabled.height = true
                         this.disabled.width = false                        
@@ -56,14 +58,15 @@
                         this.disabled.height = false
                         this.disabled.width = true                        
                     }
-                }else{
-                    this.defaultData.styles.flex = "none"
+                }else{                    
+                    this.defaultData.styles.display = "block"
+                    this.defaultData.styles.flex = "none"                    
                     this.disabled.width = false
                     this.disabled.height = false
                 }
                 this.disabled = Object.assign({},this.disabled)
             },
-            changeStatus(data){
+            changeStatus(data){                
                 // 判断禁用               
                 this.changeDisabled()                           
                 if(util.isObject(data)){
