@@ -5,19 +5,22 @@
 <template>
     <div>       
         <div class="right-form-item">
-            <span class="text">
-                <el-checkbox v-model="defaultData.temp.isFlex" @change="changeStatus"></el-checkbox>
-                弹性盒子：
-            </span>
+            <span class="text">弹性盒子：</span>
             <div class="content">
-                <el-input :disabled="!defaultData.temp.isFlex" @change="changeStatus" size="small" v-model="defaultData.styles.flex"></el-input>              
-            </div>           
+                <el-checkbox v-model="defaultData.temp.isFlex" @change="changeStatus"></el-checkbox>                
+            </div>
         </div> 
         <div class="right-form-item">
             <span class="text">内容方向：</span>
             <div class="content">
                 <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="column">竖直排列</el-radio>
                 <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="row">水平排列</el-radio>                
+            </div>           
+        </div> 
+         <div class="right-form-item">
+            <span class="text"><el-checkbox v-model="defaultData.temp.isFlexValue" @change="changeFlexValue"></el-checkbox>flex：</span>
+            <div class="content">
+                <el-input :disabled="!defaultData.temp.isFlexValue" @change="changeFlexValue" size="small" v-model="defaultData.styles.flex"></el-input>                     
             </div>           
         </div> 
         <Stylec v-if="pvue" :disabled="disabled" @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>
@@ -34,41 +37,38 @@
                 disabled:{}
             };
         },       
-        watch:{            
-        },
         props:['defaultData','staticConfig','pvue'],
         components:{
             Stylec:Stylec
         },
-        created(){            
-            this.changeDisabled()            
+        created(){                
+            this.changeFlexValue()                  
         },
-        methods:{
-            changeDisabled(){
-                if(this.defaultData.temp.isFlex){    
-                    this.defaultData.styles.display = "flex" 
-                    this.defaultData.styles.flex = 1                    
-                    if(!this.pvue || !this.pvue._vue){
-                        return 
-                    }                                              
-                    if(this.pvue._vue.defaultData.styles["flex-direction"] == "column"){
+        methods:{          
+            changeFlexValue(){                
+                if(this.defaultData.temp.isFlexValue && this.pvue){
+                    this.defaultData.styles.flex = 1
+                    if(this.pvue.option.data.styles["flex-direction"] == "column"){
                         this.disabled.height = true
-                        this.disabled.width = false                        
+                        this.disabled.width = false                       
                     }else{
+                        this.disabled.width = true
                         this.disabled.height = false
-                        this.disabled.width = true                        
                     }
-                }else{                    
-                    this.defaultData.styles.display = "block"
-                    this.defaultData.styles.flex = "none"                    
-                    this.disabled.width = false
+                }else{
+                    this.defaultData.styles.flex = "none"
                     this.disabled.height = false
+                    this.disabled.width = false
                 }
                 this.disabled = Object.assign({},this.disabled)
             },
-            changeStatus(data){                
-                // 判断禁用               
-                this.changeDisabled()                           
+            changeStatus(data){                                
+                // 判断禁用                               
+                if(this.defaultData.temp.isFlex){    
+                    this.defaultData.styles.display = "flex"                     
+                }else{                    
+                    this.defaultData.styles.display = "block"                  
+                }                          
                 if(util.isObject(data)){
                     Object.assign(this.defaultData.styles,data)                                        
                 }

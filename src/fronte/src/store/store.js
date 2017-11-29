@@ -13,7 +13,7 @@ const store = new Vuex.Store({
         })
     }],
     state: {
-        widgets: localWidgets
+        widgets: []||localWidgets
     },
     getters: {
         getById: (state, getters) => (id) => {

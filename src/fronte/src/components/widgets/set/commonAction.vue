@@ -48,7 +48,7 @@
                 isShowAction:false
             }
         },
-        props:["dvue"],
+        props:["cvue"],
         methods:{
             stopUp(event){
                 event.cancelBubble = true
@@ -62,7 +62,9 @@
             paste(){
                 
             },
-            deletei(){}
+            deletei(){
+                this.cvue.$destroy(true)                     
+            }
         }
     }
 </script>

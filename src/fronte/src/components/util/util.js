@@ -1,13 +1,12 @@
 var dom = {
     getParentByClassName($dom, className) {
-        var $parent = $dom.parentElement
-        if (!$parent) {
+        if (!$dom) {
             return
         }
-        if ($parent.className.indexOf(className) !== -1) {
-            return $parent
+        if ($dom.className.indexOf(className) !== -1) {
+            return $dom
         } else {
-            return dom.getParentByClassName($parent, className)
+            return dom.getParentByClassName($dom.parentElement, className)
         }
     }
 }
@@ -39,7 +38,7 @@ export default Object.assign({
             callback(_data)
             if (_data.children && _data.children.length !== 0) {
                 this.loop(_data.children, callback)
-            }            
+            }
         }
     }
 }, dom, type)
