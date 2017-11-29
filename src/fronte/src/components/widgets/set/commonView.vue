@@ -1,6 +1,6 @@
 <template>
     <div>        
-        <div class="right-form-item" v-if="defaultData.text">
+        <div class="right-form-item">
             <span class="text">文字：</span>
             <div class="content">
                 <el-input v-model="defaultData.text" @change="changeStatus" placeholder="请输入内容"></el-input>           

@@ -17,7 +17,7 @@
                 <el-radio @change="changeStatus" v-model="defaultData.styles['flex-direction']" label="row">水平排列</el-radio>                
             </div>           
         </div> 
-         <div class="right-form-item">
+         <div v-if="pvue" class="right-form-item">
             <span class="text"><el-checkbox v-model="defaultData.temp.isFlexValue" @change="changeFlexValue"></el-checkbox>flex：</span>
             <div class="content">
                 <el-input :disabled="!defaultData.temp.isFlexValue" @change="changeFlexValue" size="small" v-model="defaultData.styles.flex"></el-input>                     
@@ -47,7 +47,9 @@
         methods:{          
             changeFlexValue(){                
                 if(this.defaultData.temp.isFlexValue && this.pvue){
-                    this.defaultData.styles.flex = 1
+                    if( this.defaultData.styles.flex == "none"){
+                        this.defaultData.styles.flex = 1
+                    }
                     if(this.pvue.option.data.styles["flex-direction"] == "column"){
                         this.disabled.height = true
                         this.disabled.width = false                       

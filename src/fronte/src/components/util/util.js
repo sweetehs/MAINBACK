@@ -35,8 +35,8 @@ export default Object.assign({
     loop(list, callback) {
         for (let i = 0; i < list.length; i++) {
             let _data = list[i]
-            callback(_data)
-            if (_data.children && _data.children.length !== 0) {
+            let flag = callback(_data)
+            if (_data.children && _data.children.length !== 0 && !flag) {
                 this.loop(_data.children, callback)
             }
         }

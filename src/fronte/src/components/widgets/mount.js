@@ -5,10 +5,8 @@ import widgetConfig from "./config"
 
 export function mount($wrapper, id, option, $store, notSave) {	
 	var $pWrapper = util.getParentByClassName($wrapper, "widget-wrapper")
-	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""
-	// 得到父级的vm
-	let pvue = $store.getters.getById(pid)
-	// 添加数据
+	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""	
+	let pvue = $store.getters.getById(pid)	
 	let $div = document.createElement("div")
 	$wrapper.appendChild($div)
 	// create item
@@ -78,17 +76,7 @@ export function mount($wrapper, id, option, $store, notSave) {
 				event.cancelBubble = true
 			}
 		}
-	})
-	// create action
-	// new Vue({
-	// 	template: "<Commonaction :cvue='cvue'></Commonaction>",
-	// 	el: $action,
-	// 	data() {
-	// 		return {
-	// 			cvue: _vue
-	// 		}
-	// 	}
-	// })
+	})		
 	//  储存数据
 	if (!notSave) {
 		const storeData = {

@@ -4,12 +4,10 @@ import Util from "../components/util/util"
 
 Vue.use(Vuex);
 const localWidgets = localStorage.getItem("auto-produce-system") ? JSON.parse(localStorage.getItem("auto-produce-system")) : []
-console.log(JSON.parse(JSON.stringify(localWidgets)))
 const store = new Vuex.Store({
     plugins: [(store) => {
         store.subscribe((mutation, state) => {
-            localStorage.setItem("auto-produce-system", JSON.stringify(state.widgets))
-            console.log(JSON.parse(JSON.stringify(state.widgets)))
+            localStorage.setItem("auto-produce-system", JSON.stringify(state.widgets))            
         })
     }],
     state: {
@@ -21,6 +19,7 @@ const store = new Vuex.Store({
             Util.loop(state.widgets, (data) => {
                 if (data.id == id) {
                     _d = data
+                    return true
                 }
             })
             return _d
