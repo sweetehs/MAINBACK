@@ -8,6 +8,14 @@ var dom = {
         } else {
             return dom.getParentByClassName($dom.parentElement, className)
         }
+    },
+    addClass($dom, className) {
+        $dom.className = $dom.className + " " + className
+    },
+    removeClass($dom, className) {
+        if ($dom) {
+            $dom.className = $dom.className.replace(" " + className, "")
+        }
     }
 }
 var type = {
@@ -35,10 +43,13 @@ export default Object.assign({
     loop(list, callback) {
         for (let i = 0; i < list.length; i++) {
             let _data = list[i]
-            let flag = callback(_data)
+            let flag = callback(_data, i, list)
             if (_data.children && _data.children.length !== 0 && !flag) {
                 this.loop(_data.children, callback)
             }
         }
+    },
+    deepClone(o) {
+        return JSON.parse(JSON.stringify(o))
     }
 }, dom, type)

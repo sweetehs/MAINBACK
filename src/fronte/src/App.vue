@@ -26,7 +26,7 @@ div {
   width: 400px;
 }
 .main-middle {
-  padding: 10px;
+  // padding: 10px;
   flex: 1;
 }
 </style>

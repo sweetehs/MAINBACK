@@ -2,14 +2,13 @@ import Vue from 'vue'
 import { Drop } from "dnd.js";
 import util from '../util/util'
 import widgetConfig from "./config"
-
-export function mount($wrapper, id, option, $store, notSave) {	
+var setVue = ""
+export function mount($wrapper, id, option, $store, saveFlag) {
 	var $pWrapper = util.getParentByClassName($wrapper, "widget-wrapper")
-	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""	
-	let pvue = $store.getters.getById(pid)	
+	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""
+	let pvue = $store.getters.getById(pid)
 	let $div = document.createElement("div")
 	$wrapper.appendChild($div)
-	// create item
 	const _vue = new Vue({
 		template: option.tmp(),
 		el: $div,
@@ -22,7 +21,7 @@ export function mount($wrapper, id, option, $store, notSave) {
 		mounted() {
 			this.$el.addEventListener("click", (event) => {
 				this.view(event)
-			})			
+			})
 			// 拖拽绑定
 			if (option.name == "layout") {
 				this.$el.className = this.$el.className + " widget-wrapper widget-layout " + id
@@ -30,7 +29,7 @@ export function mount($wrapper, id, option, $store, notSave) {
 					onDrop(params) {
 						const data = widgetConfig[params.data]()
 						const id = util.randomid()
-						mount(params.el, id, data, $store)
+						mount(params.el, id, data, $store, true)
 					}
 				})
 			} else {
@@ -39,24 +38,21 @@ export function mount($wrapper, id, option, $store, notSave) {
 		},
 		destroyed() {
 			this.wrappernode.remove()
-
-		},		
-		methods: {			
+		},
+		methods: {
 			view(event) {
-				var $active = document.querySelectorAll(".widget-active")[0]
-				if ($active) {
-					$active.className = $active.className.replace(" widget-active", "")
-				}				
-				this.$el.className = this.$el.className + " widget-active"
-				// 生产设置				
-				let $rightinner = document.getElementsByClassName("right-inner")[0]
+				util.removeClass(document.querySelectorAll(".widget-active")[0], "widget-active")
+				util.addClass(this.$el, "widget-active")				
 				let $div = document.createElement("div")
-				$rightinner.innerHTML = ""
-				$rightinner.appendChild($div)
-				new Vue({
+				document.getElementsByClassName("right-inner")[0].appendChild($div)
+				setVue.$destroy && setVue.$destroy()
+				setVue = new Vue({
 					template: option.view(),
 					el: $div,
-					data() {						
+					destroyed() {
+						this.$el.remove()
+					},
+					data() {
 						return {
 							staticConfig: option.staticConfig,
 							defaultData: option.data,
@@ -65,7 +61,6 @@ export function mount($wrapper, id, option, $store, notSave) {
 					},
 					methods: {
 						changeStatus(data) {
-							// 保存数据
 							$store.dispatch("update", {
 								id: id,
 								data: data
@@ -73,12 +68,13 @@ export function mount($wrapper, id, option, $store, notSave) {
 						}
 					}
 				})
+				// 组织事件向上传播，所以在这隐藏子菜单
 				event.cancelBubble = true
 			}
 		}
-	})		
+	})
 	//  储存数据
-	if (!notSave) {
+	if (saveFlag) {
 		const storeData = {
 			id: id,
 			pid: pid,

@@ -1,52 +1,81 @@
-<style lang="less" scoped>
-    .common-widget-action{
-        position: absolute;
-        right: -10px;
-        top: -10px;
+<style lang="less">
+    .action-copying{
+        border: dashed 2px #333;
+        animation: flick 1s  ease-in  infinite ; 
     }
-    .el-icon-setting{
-        display: block;
-        font-size: 20px;        
-        color: #5a5e66;
-    }
-    .el-dropdown-menu{
-        margin-top: 0;
-    }
-    ul{       
-        display: inline-block;
-        font-size: 14px;
-        background: #fff;        
-        box-shadow: 0 0 10px #888;
-        border-radius: 4px;
-        position: absolute;
-        width: 80px;
-        text-align: center;
-        left: -8px;        
-        li{
-            padding:5px 0;
-            &:hover{
-                cursor: pointer;
-                text-decoration: underline;
-            }
+    @keyframes flick{
+        0%{
+            opacity: 0.5;
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 0.5;
         }
     }
+    .common-widget-action{
+        ul.common-widget-action-absolute{
+            position: absolute;
+            display: inline-block;
+            font-size: 14px;
+            background: #fff;        
+            box-shadow: 0 0 10px #888;
+            border-radius: 4px;
+            position: absolute;
+            width: 80px;
+            text-align: center;
+            left: -8px;        
+            z-index: 1;
+            li{
+                padding:5px 0;
+                &:hover{
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+        }
+        .common-widget-action-fixed{
+            ul{
+                display: flex;
+                height: 50px;
+                align-items: center;
+            }
+            li{
+                margin: 0 10px;
+                &:hover{
+                    cursor: pointer
+                }
+            }
+        }
+    }       
 </style>
 <template>
-    <div class="common-widget-action" @click="stopUp" :style="position">        
-        <ul v-show="isShowAction">
+    <div class="common-widget-action" @click="stopUp">    
+        <div class="common-widget-action-fixed">
+            <ul>
+                <li @click="exec('prev')">后退</li>
+                <li @click="exec('next')">前进</li>                
+                <li @click="exec('allscreen')">全屏查看</li>
+            </ul>
+        </div>    
+        <ul class="common-widget-action-absolute" v-show="isShowAction" :style="position">
             <li @click="exec('copy')">复制</li>
-            <li @click="exec('paste')">粘贴</li>
+            <li @click="exec('paste')" v-show="actionCopid">粘贴</li>
             <li @click="exec('deletei')">删除</li>
         </ul>
     </div>
 </template>
 <script>
     import util from "../../util/util"
+    import widgetConfig from "../config"
+    import {mount} from "../mount"
     export default{
         data(){
             return {
                 isShowAction:false,
-                actionId:"",
+                actionId:"", // 目标id
+                actionCopid:"",
                 target:"",
                 position:{
                     top:0,
@@ -54,36 +83,63 @@
                 }
             }
         },
-        props:["cvue"],
+        props:["cvue"],       
         methods:{
             setData({x,y,target}){                
                 this.isShowAction = true
                 this.position.left = x
                 this.position.top = y
-                this.target = target
+                this.target = target                
                 this.actionId = util.getParentByClassName(target, "widget-wrapper").className.match(/c\d{0,8}/)[0]
             },
             stopUp(event){
                 event.cancelBubble = true
             },
-            showAction(event){
-                this.isShowAction = !this.isShowAction
-            },
+            hide(){
+                this.isShowAction = false
+            },           
             exec(type){
-                 this.isShowAction = false
-                if(this.actionId == "c0"){
+                this.isShowAction = false
+                if(this.actionId == "c0" && (type == "copy" || type == "deletei")){
                     return
                 }
-                this[type]()               
+                this[type]()
             },
             copy(){
-                
+                this.actionCopid = this.actionId
+                util.removeClass(document.querySelector(".action-copying"),"action-copying")       
+                util.addClass(document.querySelector("."+this.actionCopid),"action-copying")                
             },
-            paste(){
-                
+            paste(){                        
+                if(this.actionCopid == this.actionId){
+                    return
+                }
+                const cData = this.$store.getters.getById(this.actionCopid)  
+                let pid = this.actionId                         
+                util.loop([cData],(_data,index,list)=>{                                
+                    let $wrapper = ""
+                    let id = util.randomid()
+                    $wrapper = document.querySelector("." + pid)
+                    mount($wrapper,id, Object.assign(widgetConfig[_data.option.name](),util.deepClone(_data.option)),this.$store,true)											
+                    if(index == list.length-1){
+                        pid = id                        
+                    }
+				})
             },
             deletei(){
-                this.target.remove()                             
+                this.$store.dispatch("delete", this.actionId)
+                util.getParentByClassName(this.target, "widget-wrapper").remove()
+            },
+            allscreen(){
+                util.addClass(document.querySelector(".middle-content"),"fixed")
+            },
+            prev(){
+                this.$store.dispatch("historyprev")
+                this.$emit("initAll")
+            },
+            next(){
+                this.$store.dispatch("historynext")                
+                this.$emit("initAll")
             }
         }
     }
