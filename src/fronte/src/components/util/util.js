@@ -10,7 +10,9 @@ var dom = {
         }
     },
     addClass($dom, className) {
-        $dom.className = $dom.className + " " + className
+        if($dom.className.indexOf(className) == -1){
+            $dom.className = $dom.className + " " + className
+        }        
     },
     removeClass($dom, className) {
         if ($dom) {

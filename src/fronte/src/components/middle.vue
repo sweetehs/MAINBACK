@@ -1,20 +1,22 @@
 <style lang="less">
-	.dnd-drop-content{
-		height: 100%;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-	}
 	.middle-wrapper{
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 		position: relative;
 	}
+	.middle-action{
+		height: 60px;
+		line-height: 60px;
+		border-bottom: 1px solid #CFCFCF;
+	}
 	.middle-content{
-		flex:1;
-		height: 100%;				
+		flex:1;			
+		display: flex;				
+	}	
+	.middle-draw{
+		height: 100%;
+		flex: 1;		
 		&.fixed{
 			z-index: 999;
 			position: fixed;
@@ -23,7 +25,10 @@
 			left: 0;
 			top:0;
 		}		
-	}	
+	}
+	.middle-set{
+		width: 330px;
+	}
 	.widget-wrapper{
 		position: relative;
 		&.widget-item {
@@ -31,12 +36,15 @@
 		}	
 		&.widget-layout{
 			box-sizing: border-box;		
-			background: #FFFAFA;
-			border-radius: 10px;
-			box-shadow: 0 0 4px #333;
+			background: #eee;
+			border-radius: 4px;
+			box-shadow: 0 0 2px #333;
 			display: flex;
 			&.widget-active{
 				background: #FFEBCD;
+			}
+			&.drag-enter{
+				background: #ced
 			}
 		}
 		.widget-item-inner{
@@ -48,16 +56,22 @@
 </style>
 
 <template>
-	<div class="middle-wrapper">	
-		<Commonaction ref="action" @initAll="initAll"></Commonaction>	
-		<div class="middle-content" @contextmenu="preventRight"></div>			
+	<div class="middle-wrapper">
+		<div class="middle-action">
+			<Action ref="action" @initAll="initAll"></Action>	
+		</div>		
+		<div class="middle-content">
+			<div class="middle-draw" @contextmenu="preventRight"></div>
+			<div class="middle-set"><Right></Right></div>
+		</div>			
 	</div>	
 </template>
 
 <script>
 	import widgetConfig from "./widgets/config"
-	import util from "./util/util"
-	import Commonaction from "./widgets/set/commonAction"
+	import Right from "./right"
+	import Action from "./action"
+	import util from "./util/util"	
 	import {
 		mount
 	} from "./widgets/mount";		
@@ -75,15 +89,15 @@
 		},
 		methods:{
 			initAll(){
-				document.querySelector(".middle-content").innerHTML = ""				
+				document.querySelector(".middle-draw").innerHTML = ""				
 				if(this.$store.state.widgets.length == 0){
 				// 初始化
-					let $wrapper = document.getElementsByClassName("middle-content")[0]
+					let $wrapper = document.getElementsByClassName("middle-draw")[0]
 					mount($wrapper,"c0", widgetConfig["layout"](),this.$store,true)
 				}else{
 					util.loop(this.$store.state.widgets,(_data)=>{					
 						if(!_data.pid){						
-							let $wrapper = document.getElementsByClassName("middle-content")[0]
+							let $wrapper = document.getElementsByClassName("middle-draw")[0]
 							mount($wrapper,"c0",Object.assign(widgetConfig[_data.option.name](),_data.option),this.$store,false)						
 						}else{
 							let $wrapper = document.querySelector("." + _data.pid)						
@@ -100,6 +114,10 @@
 				})
 				event.preventDefault()
 			}
+		},
+		components:{
+			Right: Right,
+			Action: Action
 		}
 	}
 </script>

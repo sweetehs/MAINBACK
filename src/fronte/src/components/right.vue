@@ -1,12 +1,15 @@
 <style lang="less">
-.right-wrapper,
-.right-inner {
-  height: 100%;
+.right-wrapper{
+	// background: #32323A;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 10px;
+  // color: #fff!important;  
 }
-.right-form-item{
-  margin: 10px 0;
+.right-form-item{  
+	margin-bottom: 10px;
   display: flex;
-  align-items: center;
+  align-items: center;  
   &.fs{
     align-items: flex-start;
   }
@@ -17,7 +20,7 @@
     margin-bottom: 5px;
   }
   span.text{
-    width: 120px;
+    width: 90px;
     text-align: right;
     margin-right: 10px;
   }

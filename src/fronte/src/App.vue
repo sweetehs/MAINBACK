@@ -5,46 +5,24 @@ div {
 #app {
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
-.main-top {
-  height: 50px;
-  border-bottom: 1px solid #abc;
-}
-.main-bottom {
-  flex: 1;
-  display: flex;
-}
-.main-left {
-  padding: 10px;
-  border-right: 1px solid #abc;
+.main-left {    
   width: 300px;
+  height: 100%;
 }
-.main-right {
-  padding: 10px;
-  border-left: 1px solid #abc;
-  width: 400px;
-}
-.main-middle {
-  // padding: 10px;
+.main-middle {  
   flex: 1;
+  height: 100%;
 }
 </style>
 
 <template>
-  <div id="app">            
-		<div class="main-top"></div>
-		<div class="main-bottom">
-			<div class="main-left">
-				<Left></Left>
-			</div>
-			<div class="main-middle">
-        <Middle></Middle>
-      </div>
-      <div class="main-right">
-        <Right></Right>
-      </div>
-		</div>
+  <div id="app">    
+    <div class="main-left"><Left></Left></div>      
+    <div class="main-middle">      
+      <Middle></Middle>
+    </div>  		
   </div>
 </template>
 
@@ -61,8 +39,7 @@ export default {
   mounted() {},
   components: {
     Left: Left,
-    Middle: Middle,
-    Right: Right
+    Middle: Middle
   }
 };
 </script>

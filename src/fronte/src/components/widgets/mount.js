@@ -30,6 +30,14 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 						const data = widgetConfig[params.data]()
 						const id = util.randomid()
 						mount(params.el, id, data, $store, true)
+						util.removeClass(document.querySelector(".drag-enter"), "drag-enter")
+					},
+					onDragOver(params) {
+						util.removeClass(document.querySelector(".drag-enter"), "drag-enter")
+						util.addClass(params.el, "drag-enter")
+					},
+					onDragLeave(params) {
+						util.removeClass(document.querySelector(".drag-enter"), "drag-enter")
 					}
 				})
 			} else {
@@ -42,7 +50,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 		methods: {
 			view(event) {
 				util.removeClass(document.querySelectorAll(".widget-active")[0], "widget-active")
-				util.addClass(this.$el, "widget-active")				
+				util.addClass(this.$el, "widget-active")
 				let $div = document.createElement("div")
 				document.getElementsByClassName("right-inner")[0].appendChild($div)
 				setVue.$destroy && setVue.$destroy()

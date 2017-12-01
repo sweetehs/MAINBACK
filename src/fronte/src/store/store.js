@@ -28,7 +28,7 @@ const store = new Vuex.Store({
         })
     }],
     state: {
-        widgets: [] || localWidgets,
+        widgets: localWidgets,
         historyindex: 0
     },
     getters: {
@@ -69,16 +69,12 @@ const store = new Vuex.Store({
             if (state.historyindex > 1) {
                 state.historyindex--
                 state.widgets = temp[state.historyindex - 1]
-            } else {
-                alert("不能后退了")
             }
         },
         historynext(state) {
             if (state.historyindex < temp.length) {
                 state.historyindex++
                 state.widgets = temp[state.historyindex - 1]
-            } else {
-                alert("不能前进了")
             }
         }
     },

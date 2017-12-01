@@ -14,7 +14,7 @@
             opacity: 0.5;
         }
     }
-    .common-widget-action{
+    .common-widget-action{        
         ul.common-widget-action-absolute{
             position: absolute;
             display: inline-block;
@@ -29,6 +29,7 @@
             z-index: 1;
             li{
                 padding:5px 0;
+                line-height: 1.4;
                 &:hover{
                     cursor: pointer;
                     text-decoration: underline;
@@ -37,8 +38,7 @@
         }
         .common-widget-action-fixed{
             ul{
-                display: flex;
-                height: 50px;
+                display: flex;                
                 align-items: center;
             }
             li{
@@ -54,9 +54,9 @@
     <div class="common-widget-action" @click="stopUp">    
         <div class="common-widget-action-fixed">
             <ul>
-                <li @click="exec('prev')">后退</li>
-                <li @click="exec('next')">前进</li>                
-                <li @click="exec('allscreen')">全屏查看</li>
+                <li @click="exec('prev')"><i class="el-icon-d-arrow-left"></i></li>
+                <li @click="exec('next')"><i class="el-icon-d-arrow-right"></i></li>                
+                <li @click="exec('allscreen')"><i class="el-icon-rank"></i></li>
             </ul>
         </div>    
         <ul class="common-widget-action-absolute" v-show="isShowAction" :style="position">
@@ -67,9 +67,9 @@
     </div>
 </template>
 <script>
-    import util from "../../util/util"
-    import widgetConfig from "../config"
-    import {mount} from "../mount"
+    import util from "./util/util"
+    import widgetConfig from "./widgets/config"
+    import {mount} from "./widgets/mount"
     export default{
         data(){
             return {
@@ -131,7 +131,7 @@
                 util.getParentByClassName(this.target, "widget-wrapper").remove()
             },
             allscreen(){
-                util.addClass(document.querySelector(".middle-content"),"fixed")
+                util.addClass(document.querySelector(".middle-draw"),"fixed")
             },
             prev(){
                 this.$store.dispatch("historyprev")
