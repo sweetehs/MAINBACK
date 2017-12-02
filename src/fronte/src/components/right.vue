@@ -3,7 +3,7 @@
 	// background: #32323A;
 	height: 100%;
 	box-sizing: border-box;
-	padding: 10px;
+  padding: 10px;
   // color: #fff!important;  
   .el-input{
     width: 80px;

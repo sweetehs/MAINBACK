@@ -16,7 +16,7 @@
 	}	
 	.middle-draw{
 		height: 100%;
-		flex: 1;		
+		flex: 1;	
 		&.fixed{
 			z-index: 999;
 			position: fixed;
@@ -28,6 +28,7 @@
 	}
 	.middle-set{
 		width: 280px;
+		flex-shrink: 0;
 	}
 	.widget-wrapper{
 		position: relative;
@@ -40,11 +41,20 @@
 			border-radius: 4px;
 			box-shadow: 0 0 2px #333;
 			display: flex;
+			position: relative;
 			&.widget-active{
 				background: #FFEBCD;
 			}
 			&.drag-enter{
 				background: #ced
+			}
+			.resize{
+				position: absolute;
+				height: 5px;
+				width: 5px;
+				background: #000;
+				bottom: 0;
+				right: 0;
 			}
 		}
 		.widget-item-inner{

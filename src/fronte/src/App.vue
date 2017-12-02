@@ -10,6 +10,7 @@ div {
 .main-left {    
   width: 240px;
   height: 100%;
+  flex-shrink: 0
 }
 .main-middle {  
   flex: 1;

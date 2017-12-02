@@ -143,7 +143,7 @@
 				isShow:"",
 				list:[{
 					name:"Base",
-					children:["layout","button"]
+					children:["layout","button","input"]
 				}],
 				detailList:""				
 			};

@@ -3,6 +3,11 @@ import { Drop, Drag } from "dnd.js";
 import util from '../util/util'
 import widgetConfig from "./config"
 var setVue = ""
+/*
+	里面有两个组件
+	公用option参数
+	所以当view数据变化的时候，item组件能够变化
+*/
 export function mount($wrapper, id, option, $store, saveFlag) {
 	var $pWrapper = util.getParentByClassName($wrapper, "widget-wrapper")
 	var pid = $pWrapper ? $pWrapper.className.match(/c\d{0,8}/)[0] : ""
@@ -13,18 +18,36 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 		template: option.tmp(),
 		el: $div,
 		data() {
+			let classArr = []
+			if (option.name == "layout") {
+				classArr = ["widget-wrapper", "widget-layout", id]
+			} else {
+				classArr = ["widget-wrapper", "widget-item", id]
+			}
 			return {
 				defaultData: option.data,
-				wrappernode: $div
+				wrappernode: $div,
+				classArr: classArr
+			}
+		},
+		watch: {
+			defaultData: {
+				deep: true,
+				handler() {
+					// 有的组件刷新会冲掉id，重新赋值
+					setTimeout(() => {
+						util.addClass(this.$el, this.classArr.join(" "))
+					}, 100)
+				}
 			}
 		},
 		mounted() {
+			util.addClass(this.$el, this.classArr.join(" "))
 			this.$el.addEventListener("click", (event) => {
 				this.view(event)
 			})
 			if (option.name == "layout") {
 				// 布局
-				this.$el.className = this.$el.className + " widget-wrapper widget-layout " + id
 				new Drop(this.$el, {
 					onDrop(params) {
 						if (params.data == "in") {
@@ -54,7 +77,6 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 				})
 			} else {
 				// 元素
-				this.$el.className = this.$el.className + " widget-wrapper widget-item " + id
 				new Drop(this.$el, {
 					onDrop(params) {
 						if (params.data !== "in") {
@@ -85,13 +107,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 					}
 				})
 				new Drag(this.$el, {
-					data: "in",
-					onDragStart(params) {
-
-					},
-					onDragEnd(params) {
-
-					}
+					data: "in"
 				})
 			}
 		},
