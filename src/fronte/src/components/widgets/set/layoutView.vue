@@ -13,8 +13,8 @@
         <div class="right-form-item">
             <span class="text">内容方向：</span>
             <div class="content">
-                <el-radio @change="changeFlexValue" :disabled="!defaultData.temp.isFlex" v-model="defaultData.styles['flex-direction']" label="column">竖直排列</el-radio>
-                <el-radio @change="changeFlexValue" :disabled="!defaultData.temp.isFlex" v-model="defaultData.styles['flex-direction']" label="row">水平排列</el-radio>                
+                <el-radio @change="changeFlexValue" :disabled="!defaultData.temp.isFlex" v-model="defaultData.styles['flex-direction']" label="column">竖直</el-radio>
+                <el-radio @change="changeFlexValue" :disabled="!defaultData.temp.isFlex" v-model="defaultData.styles['flex-direction']" label="row">水平</el-radio>                
             </div>           
         </div> 
          <div v-if="pvue" class="right-form-item">

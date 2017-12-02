@@ -8,7 +8,7 @@ div {
   flex-direction: row;
 }
 .main-left {    
-  width: 300px;
+  width: 240px;
   height: 100%;
 }
 .main-middle {  

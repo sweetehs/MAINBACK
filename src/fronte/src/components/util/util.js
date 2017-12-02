@@ -10,9 +10,9 @@ var dom = {
         }
     },
     addClass($dom, className) {
-        if($dom.className.indexOf(className) == -1){
+        if ($dom.className.indexOf(className) == -1) {
             $dom.className = $dom.className + " " + className
-        }        
+        }
     },
     removeClass($dom, className) {
         if ($dom) {
@@ -53,5 +53,8 @@ export default Object.assign({
     },
     deepClone(o) {
         return JSON.parse(JSON.stringify(o))
+    },
+    getId(className) {
+        return className.match(/c\d{1,8}/)[0] || ""
     }
 }, dom, type)

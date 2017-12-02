@@ -65,6 +65,29 @@ const store = new Vuex.Store({
                 }
             })
         },
+        change(state, data) {
+            let p1 = ""
+            let i1 = ""
+            let p2 = ""
+            let i2 = ""
+            util.loop(state.widgets, (_d, index, parent) => {
+                if(data.id1 == _d.id){
+                    p1 = parent
+                    i1 = index
+                }
+                if(data.id2 == _d.id){
+                    p2 = parent
+                    i2 = index
+                }
+                if(p1 && p2){
+                    return true
+                }
+            })
+            var temp = ""
+            temp = p1[i1]
+            p1[i1] = p2[i2]
+            p2[i2] = temp
+        },
         historyprev(state) {
             if (state.historyindex > 1) {
                 state.historyindex--
@@ -87,6 +110,9 @@ const store = new Vuex.Store({
         },
         delete(context, id) {
             context.commit("delete", id)
+        },
+        change(context, data) {
+            context.commit("change", data)
         },
         historyprev(context) {
             context.commit("historyprev")

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Drop } from "dnd.js";
+import { Drop, Drag } from "dnd.js";
 import util from '../util/util'
 import widgetConfig from "./config"
 var setVue = ""
@@ -22,26 +22,77 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 			this.$el.addEventListener("click", (event) => {
 				this.view(event)
 			})
-			// 拖拽绑定
 			if (option.name == "layout") {
+				// 布局
 				this.$el.className = this.$el.className + " widget-wrapper widget-layout " + id
 				new Drop(this.$el, {
 					onDrop(params) {
+						if (params.data == "in") {
+							// 如果从内部拖拽元素不处理
+							return
+						}
 						const data = widgetConfig[params.data]()
 						const id = util.randomid()
 						mount(params.el, id, data, $store, true)
 						util.removeClass(document.querySelector(".drag-enter"), "drag-enter")
 					},
 					onDragOver(params) {
+						if (params.data == "in") {
+							// 如果从内部拖拽元素不处理
+							return
+						}
 						util.removeClass(document.querySelector(".drag-enter"), "drag-enter")
 						util.addClass(params.el, "drag-enter")
 					},
 					onDragLeave(params) {
+						if (params.data == "in") {
+							// 如果从内部拖拽元素不处理
+							return
+						}
 						util.removeClass(document.querySelector(".drag-enter"), "drag-enter")
 					}
 				})
 			} else {
+				// 元素
 				this.$el.className = this.$el.className + " widget-wrapper widget-item " + id
+				new Drop(this.$el, {
+					onDrop(params) {
+						if (params.data !== "in") {
+							// 元素列表拖拽
+							const data = widgetConfig[params.data]()
+							const id = util.randomid()
+							const el = util.getParentByClassName(params.el, "widget-layout")
+							mount(el, id, data, $store, true)
+						} else {
+							// 从内部拖拽
+							// 只能交换同父元素的两个元素
+							// 交换数据,刷新父级
+							if (params.el.parentElement == params.sourceNode.parentElement) {
+								let id1 = util.getId(params.el.className)
+								let id2 = util.getId(params.sourceNode.className)
+								$store.dispatch("change", {
+									id1: id1,
+									id2: id2
+								})
+								let pdata = $store.getters.getById(pid)
+								document.querySelector("." + pid).innerHTML = ""
+								util.loop(pdata.children, (_data) => {
+									let $wrapper = document.querySelector("." + _data.pid)
+									mount($wrapper, _data.id, Object.assign(widgetConfig[_data.option.name](), _data.option), $store, false)
+								})
+							}
+						}
+					}
+				})
+				new Drag(this.$el, {
+					data: "in",
+					onDragStart(params) {
+
+					},
+					onDragEnd(params) {
+
+					}
+				})
 			}
 		},
 		destroyed() {

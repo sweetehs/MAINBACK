@@ -25,14 +25,14 @@
 			background: #fff;
 			border-radius: 100px;
 			overflow: hidden;
-			width: 160px;
-			height: 160px;
+			width: 140px;
+			height: 140px;
 			box-shadow: 0 0 10px #fff;
+			text-align: center;
 			img{
-				margin-top: 18px;
-				transform: scale(0.6);
-				margin-left: -18px;
-    			margin-top: -3px;
+				margin-top: 30px;
+				width: 100px;
+				display: inline-block;
 			}			
 		}
 		.text{

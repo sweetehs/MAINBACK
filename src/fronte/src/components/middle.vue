@@ -27,7 +27,7 @@
 		}		
 	}
 	.middle-set{
-		width: 330px;
+		width: 280px;
 	}
 	.widget-wrapper{
 		position: relative;
@@ -89,7 +89,7 @@
 		},
 		methods:{
 			initAll(){
-				document.querySelector(".middle-draw").innerHTML = ""				
+				document.querySelector(".middle-draw").innerHTML = ""	
 				if(this.$store.state.widgets.length == 0){
 				// 初始化
 					let $wrapper = document.getElementsByClassName("middle-draw")[0]
