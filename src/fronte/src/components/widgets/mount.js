@@ -34,7 +34,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 			defaultData: {
 				deep: true,
 				handler() {
-					// 有的组件刷新会冲掉id，重新赋值
+					// 有的组件刷新会冲掉id，重新
 					setTimeout(() => {
 						util.addClass(this.$el, this.classArr.join(" "))
 					}, 100)
