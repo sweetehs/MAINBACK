@@ -1,0 +1,7 @@
+import <%=name%> from "../_autocomponents/<%=name%>/<%=name%>"
+export default [
+    {
+        path: '/<%=name%>',
+        component: <%=name%>
+    }
+]

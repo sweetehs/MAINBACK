@@ -3,9 +3,12 @@
 </style>
 
 <script>
+    import {baseData} from "./data.js"
     export default{
         data(){
-            return ##data##
+            return {
+                baseData: baseData
+            }
         },
         method:{
 
@@ -14,7 +17,8 @@
 </script>
 <template>
     <div>
-        ##template##
+##template##
     </div>
 </template>
 
+ase
