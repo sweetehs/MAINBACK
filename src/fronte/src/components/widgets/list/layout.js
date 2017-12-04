@@ -4,7 +4,7 @@ const staticConfig = {
 export default function init() {
     return {
         name: "layout",
-        data: {
+        data: {            
             temp: {
                 isFlex: true,
                 isFlexValue: true

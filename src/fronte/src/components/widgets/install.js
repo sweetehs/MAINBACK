@@ -1,6 +1,6 @@
 import Commonview from "./set/commonview"
 import Layoutview from "./set/layoutView"
-import Layout from "./self/layout"
+import Layout from "../../output/layout"
 import Droppable from "../util/droppable"
 export default (Vue, options) => {
     // 常用组件

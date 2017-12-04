@@ -15,15 +15,7 @@
 </template>
 
 <script>
-    export default {
-        watch: {
-            num: {
-                handler() {
-    
-                },
-                deep: true
-            }
-        },
+    export default {       
         methods: {
             clickEvent(event) {
                 this.$emit("click", event)
