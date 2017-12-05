@@ -28,7 +28,7 @@ const store = new Vuex.Store({
         })
     }],
     state: {
-        widgets: localWidgets,
+        widgets: [] || localWidgets,
         historyindex: 0
     },
     getters: {
@@ -71,15 +71,15 @@ const store = new Vuex.Store({
             let p2 = ""
             let i2 = ""
             util.loop(state.widgets, (_d, index, parent) => {
-                if(data.id1 == _d.id){
+                if (data.id1 == _d.id) {
                     p1 = parent
                     i1 = index
                 }
-                if(data.id2 == _d.id){
+                if (data.id2 == _d.id) {
                     p2 = parent
                     i2 = index
                 }
-                if(p1 && p2){
+                if (p1 && p2) {
                     return true
                 }
             })

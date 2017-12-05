@@ -12,11 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:8001',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/api'
-        }
+        target: 'http://www.drag.com:8001',
+        changeOrigin: true
       }
     },
 

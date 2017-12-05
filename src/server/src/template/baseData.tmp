@@ -1,1 +1,1 @@
-exports.baseData = ##baseData##
+exports.baseData = <%-baseData%>

@@ -17,14 +17,8 @@
 </script>
 <template>
     <div>
-<layout  :style="baseData['c0'].styles">
-    <el-button type="info" size="large" :style="baseData['c42665303'].styles">默认0</el-button>
-    <layout  :style="baseData['c91863989'].styles">
-        <el-button type="danger" size="large" :style="baseData['c94297335'].styles">默认1</el-button>
-    </layout>
+<layout :style="baseData['c0'].styles">
+    <Table :table="baseData['c44151148'].table"></Table>
 </layout>
-
     </div>
 </template>
-
-ase

@@ -146,12 +146,11 @@
                 this.$store.dispatch("delete", this.actionId)
                 util.getParentByClassName(this.target, "widget-wrapper").remove()
             },
-            allscreen() {
-                // util.addClass(document.querySelector(".middle-draw"), "fixed")
-                axios.get("/test", {
-                    data:util.deepClone(this.$store.state.widgets)
-                }).then(() => {
-                    debugger
+            allscreen() {                                
+                axios.post("/api/test", {
+                    data:JSON.stringify(this.$store.state.widgets)
+                }).then(() => {           
+                    window.open("http://localhost:8080/#/test")         
                 })
             },
             prev() {

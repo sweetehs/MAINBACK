@@ -1,4 +1,4 @@
-import TEST from "../_autocomponents/TEST/TEST"
+import TEST from "./TEST/TEST"
 export default [
     {
         path: '/TEST',

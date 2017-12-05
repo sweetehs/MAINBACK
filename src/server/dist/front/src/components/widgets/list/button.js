@@ -7,16 +7,16 @@ export default function init() {
     return {
         name: 'button',
         tag: 'el-button',
-        data: {
-            // type: 'type',
+        data: {            
             attr: {
                 type: 'primary',
-                size: 'large',
+                size: 'medium',
                 text: '默认',
             },
             styles: {}
         },
         staticConfig: staticConfig,
+        btmp: `<el-button {{style|styles}} type="<%=attr.type%>" size="<%=attr.size%>"><%=attr.text%></el-button>`,
         tmp: () => {
             return `<el-button :style='defaultData.styles' :type="defaultData.attr.type" :size="defaultData.attr.size">{{defaultData.attr.text}}</el-button>`
         },

@@ -1,4 +1,4 @@
-import <%=name%> from "../_autocomponents/<%=name%>/<%=name%>"
+import <%=name%> from "./<%=name%>/<%=name%>"
 export default [
     {
         path: '/<%=name%>',

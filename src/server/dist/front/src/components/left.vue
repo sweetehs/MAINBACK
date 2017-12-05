@@ -131,13 +131,16 @@
 				isShow:"",
 				list:[{
 					name:"Base",
-					children:["layout","button","input","radio"]
+					children:["layout","button","input","table"]
 				}],
 				detailList:""				
 			};
 		},
 		components: {
 			Draggable: Draggable
+		},
+		mounted(){
+			this.showDetail(this.list[0])
 		},
 		methods: {
 			showDetail(item){

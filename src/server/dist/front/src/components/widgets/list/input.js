@@ -13,10 +13,11 @@ export default function init() {
                 type: "input",
                 size: "medium",
                 readonly: false,
-            },
+            },            
             styles: {}
         },
         staticConfig: staticConfig,
+        btmp: `<el-input {{style|styles}} placeholder="<%=attr.placeholder%>" type="<%=attr.type%>" size="<%=attr.size%>" <%=attr.readonly?'readonly':''%> ></el-input>`,
         tmp: () => {
             return `<el-input :style='defaultData.styles' :placeholder="defaultData.attr.placeholder" :type="defaultData.attr.type" :size="defaultData.attr.size" :readonly="true"></el-input>`
         },
