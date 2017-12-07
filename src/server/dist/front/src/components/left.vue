@@ -123,7 +123,7 @@
 </template>
 
 <script>
-	import Draggable from "./util/draggable"
+	import Draggable from "../util/draggable"
 	import util from "../util/util"
 	export default {
 		data() {

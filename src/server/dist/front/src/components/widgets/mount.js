@@ -37,7 +37,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 					// 有的组件刷新会冲掉id，重新
 					setTimeout(() => {
 						util.addClass(this.$el, this.classArr.join(" "))
-					}, 100)					
+					}, 100)
 				}
 			}
 		},
@@ -118,9 +118,9 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 			view(event) {
 				util.removeClass(document.querySelectorAll(".widget-active")[0], "widget-active")
 				util.addClass(this.$el, "widget-active")
-				view(option, {
+				mountView(option, {
 					pvue: pvue
-				}, (data) => {					
+				}, (data) => {
 					$store.dispatch("update", {
 						id: id,
 						data: data
@@ -142,7 +142,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 		$store.dispatch("add", storeData)
 	}
 }
-export function view(option, odata, changeCallback) {	
+export function mountView(option, odata, changeCallback) {
 	let $div = document.createElement("div")
 	document.getElementsByClassName("right-inner")[0].appendChild($div)
 	setVue.$destroy && setVue.$destroy()
@@ -154,7 +154,7 @@ export function view(option, odata, changeCallback) {
 		},
 		data() {
 			return Object.assign({
-				staticConfig: option.staticConfig,
+				staticConfig: option.staticConfig || {},
 				defaultData: option.data
 			}, odata)
 		},

@@ -1,6 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import util from "../components/util/util"
+import util from "../util/util"
 
 Vue.use(Vuex);
 const localWidgets = localStorage.getItem("auto-produce-system") ? JSON.parse(localStorage.getItem("auto-produce-system")) : []

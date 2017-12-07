@@ -7,6 +7,9 @@
   // color: #fff!important;  
   .el-input{
     width: 80px;
+    &.large{
+      width: 250px;
+    }
   }
 }
 .right-form-item{  
