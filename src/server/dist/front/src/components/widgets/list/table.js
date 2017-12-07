@@ -33,7 +33,7 @@ export default function init() {
             return `<Table :table="defaultData.table"></Table>`
         },
         view: () => {
-            return ``
+            return `<Tableview v-on:changeStatus="changeStatus" :defaultData="defaultData" :staticConfig="staticConfig"></Tableview>`
         }
     }
 }

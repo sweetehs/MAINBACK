@@ -28,7 +28,7 @@ const store = new Vuex.Store({
         })
     }],
     state: {
-        widgets: [] || localWidgets,
+        widgets:localWidgets,
         historyindex: 0
     },
     getters: {

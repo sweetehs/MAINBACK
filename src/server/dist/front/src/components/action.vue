@@ -72,7 +72,7 @@
 
 <script>
     import axios from "axios"
-    import util from "./util/util"
+    import util from "../util/util"
     import widgetConfig from "./widgets/config"
     import {
         mount

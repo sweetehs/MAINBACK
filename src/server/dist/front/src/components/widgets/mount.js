@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { Drop, Drag } from "dnd.js";
-import util from '../util/util'
+import util from '../../util/util'
 import widgetConfig from "./config"
 var setVue = ""
 /*
@@ -37,7 +37,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 					// 有的组件刷新会冲掉id，重新
 					setTimeout(() => {
 						util.addClass(this.$el, this.classArr.join(" "))
-					}, 100)
+					}, 100)					
 				}
 			}
 		},
@@ -118,30 +118,13 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 			view(event) {
 				util.removeClass(document.querySelectorAll(".widget-active")[0], "widget-active")
 				util.addClass(this.$el, "widget-active")
-				let $div = document.createElement("div")
-				document.getElementsByClassName("right-inner")[0].appendChild($div)
-				setVue.$destroy && setVue.$destroy()
-				setVue = new Vue({
-					template: option.view(),
-					el: $div,
-					destroyed() {
-						this.$el.remove()
-					},
-					data() {
-						return {
-							staticConfig: option.staticConfig,
-							defaultData: option.data,
-							pvue: pvue
-						}
-					},
-					methods: {
-						changeStatus(data) {
-							$store.dispatch("update", {
-								id: id,
-								data: data
-							})
-						}
-					}
+				view(option, {
+					pvue: pvue
+				}, (data) => {					
+					$store.dispatch("update", {
+						id: id,
+						data: data
+					})
 				})
 				// 组织事件向上传播，所以在这隐藏子菜单
 				event.cancelBubble = true
@@ -158,4 +141,27 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 		}
 		$store.dispatch("add", storeData)
 	}
+}
+export function view(option, odata, changeCallback) {	
+	let $div = document.createElement("div")
+	document.getElementsByClassName("right-inner")[0].appendChild($div)
+	setVue.$destroy && setVue.$destroy()
+	setVue = new Vue({
+		template: option.view(),
+		el: $div,
+		destroyed() {
+			this.$el.remove()
+		},
+		data() {
+			return Object.assign({
+				staticConfig: option.staticConfig,
+				defaultData: option.data
+			}, odata)
+		},
+		methods: {
+			changeStatus(data) {
+				changeCallback && changeCallback(data)
+			}
+		}
+	})
 }

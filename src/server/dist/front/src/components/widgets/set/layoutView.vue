@@ -29,7 +29,7 @@
 
 <script>    
     import Stylec from "../set/style"
-    import util from "../../util/util"
+    import util from "../../../util/util"
     export default {
         data() {                        
             return {     

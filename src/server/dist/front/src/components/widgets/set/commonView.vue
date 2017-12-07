@@ -26,7 +26,7 @@
 
 <script>    
     import Stylec from "./style"
-    import util from "../../util/util"
+    import util from "../../../util/util"
     export default {       
         props:['defaultData','staticConfig'],
         components:{

@@ -10,18 +10,33 @@
   height: 100%;
   flex-shrink: 0
 }
-.main-middle {  
+.main-right{
   flex: 1;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .main-top{
+    height: 60px;
+    line-height: 60px;
+		background: #41B883;
+		flex-shrink: 0;
+  }
+  .main-middle {  
+    flex: 1;
+    height: 100%;
+  }
 }
+
 </style>
 
 <template>
   <div id="main">   
-    <div class="main-left"><Left></Left></div>      
-    <div class="main-middle">      
-      <Middle></Middle>
-    </div>  		
+    <div class="main-left"><Left></Left></div>
+    <div class="main-right">
+      <div class="main-top"></div>  		
+      <div class="main-middle">
+        <Middle></Middle>
+      </div>
+    </div>    
   </div>
 </template>
 

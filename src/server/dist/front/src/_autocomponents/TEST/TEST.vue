@@ -18,7 +18,10 @@
 <template>
     <div>
 <layout :style="baseData['c0'].styles">
-    <Table :table="baseData['c44151148'].table"></Table>
+</layout><layout :style="baseData['c0'].styles">
+    <layout :style="baseData['c63624592'].styles">
+        <el-input :style="baseData['c9237123'].styles" placeholder="请输入文字" type="input" size="medium"  ></el-input>        <el-button :style="baseData['c47049475'].styles" type="primary" size="medium">默认</el-button>        <Table :table="baseData['c96902875'].table"></Table>
+    </layout>
 </layout>
     </div>
 </template>

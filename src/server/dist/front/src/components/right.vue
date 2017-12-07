@@ -19,8 +19,10 @@
   header{
     margin-bottom: 10px;
   }  
-  input{
-    margin-bottom: 5px;
+  input{    
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
   }
   span.text{
     width: 90px;
@@ -44,11 +46,5 @@
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {};
-  },
-  methods: {},
-  components: {}
-};
+
 </script>

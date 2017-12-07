@@ -31,7 +31,7 @@ const loop = (list) => {
                 let strs = str.match(/^{{(.*?)}}$/)[1].split("|")
                 _data.option.btmp = _data.option.btmp.replace(new RegExp(str.replace("|", "\\|")), `:${strs[0]}="baseData['${_data.id}'].${strs[1]}"`)
             })
-            template += `${space(index)}${ejs.render(_data.option.btmp, _data.option.data)}`
+            template += `${space(index)}${ejs.render(_data.option.btmp, _data.option.data)}\n`
         }
     }
     index--
