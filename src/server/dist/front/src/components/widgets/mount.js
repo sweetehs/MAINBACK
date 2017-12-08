@@ -2,7 +2,6 @@ import Vue from 'vue'
 import { Drop, Drag } from "dnd.js";
 import util from '../../util/util'
 import widgetConfig from "./config"
-var setVue = ""
 /*
 	里面有两个组件
 	公用option参数
@@ -92,7 +91,7 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 							if (params.el.parentElement == params.sourceNode.parentElement) {
 								let id1 = util.getId(params.el.className)
 								let id2 = util.getId(params.sourceNode.className)
-								$store.dispatch("change", {
+								$store.dispatch("pageChange", {
 									id1: id1,
 									id2: id2
 								})
@@ -115,13 +114,14 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 			this.wrappernode.remove()
 		},
 		methods: {
-			view(event) {
+			view(event) {				
 				util.removeClass(document.querySelectorAll(".widget-active")[0], "widget-active")
 				util.addClass(this.$el, "widget-active")
 				mountView(option, {
+					store: $store,
 					pvue: pvue
 				}, (data) => {
-					$store.dispatch("update", {
+					$store.dispatch("pageUpdate", {
 						id: id,
 						data: data
 					})
@@ -139,29 +139,49 @@ export function mount($wrapper, id, option, $store, saveFlag) {
 			option: option,
 			children: []
 		}
-		$store.dispatch("add", storeData)
+		$store.dispatch("pageAdd", storeData)
 	}
 }
+var setVue = ""
+var eventVue = ""
 export function mountView(option, odata, changeCallback) {
-	let $div = document.createElement("div")
-	document.getElementsByClassName("right-inner")[0].appendChild($div)
+	let $div1 = document.createElement("div")
+	document.getElementsByClassName("right-style")[0].appendChild($div1)
 	setVue.$destroy && setVue.$destroy()
 	setVue = new Vue({
 		template: option.view(),
-		el: $div,
+		el: $div1,
 		destroyed() {
 			this.$el.remove()
+		},
+		watch: {
+			defaultData: {
+				deep: true,
+				handler(a, b) {
+					changeCallback && changeCallback(b)
+				}
+			}
 		},
 		data() {
 			return Object.assign({
 				staticConfig: option.staticConfig || {},
 				defaultData: option.data
 			}, odata)
-		},
-		methods: {
-			changeStatus(data) {
-				changeCallback && changeCallback(data)
-			}
+		}
+	})
+	let $div2 = document.createElement("div")
+	document.getElementsByClassName("right-event")[0].appendChild($div2)
+	eventVue.$destroy && eventVue.$destroy()	
+	eventVue = new Vue({
+		template: `<Eventview :store="store" :eventData="eventData"></Eventview>`,
+		el: $div2,
+		data() {			
+			return Object.assign({
+				eventData: option.data.event				
+			}, odata)
+		},				
+		destroyed() {
+			this.$el.remove()
 		}
 	})
 }

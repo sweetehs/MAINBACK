@@ -11,14 +11,13 @@
 		// border-bottom: 1px solid #CFCFCF;
 	}	
 	.page-wrapper{
-		background: #eee;		
+		background: #F5F7FA;		
 		position: relative;		
 		padding: 0 5px;			
 		flex: 1;	
 	}
 	.set-wrapper{
-		width: 380px;
-		flex-shrink: 0;
+		width: 380px;				
 	}
 	
 </style>
@@ -27,17 +26,16 @@
 	<div class="middle-wrapper">						
 		<div class="page-wrapper">
 			<Middledraw></Middledraw>
-			<Middleajax></Middleajax>
+			<!-- <Middleajax></Middleajax> -->
 		</div>
 		<div class="set-wrapper"><Right></Right></div>		
 	</div>	
 </template>
 
-<script>	
-	import Right from "./right"	
+<script>		
+	// import Right from "./Right"
 	import Middledraw from "./middle-draw"
-	import Middleajax from "./middle-ajax"	
-		
+	import Middleajax from "./middle-ajax"			
 	export default {
 		data() {
 			return {
@@ -47,10 +45,10 @@
 				}
 			};
 		},
-		components:{
-			Right: Right,			
+		components:{			
 			Middleajax:Middleajax,
-			Middledraw:Middledraw
+			Middledraw:Middledraw,
+			// Right:Right
 		}
 	}
 </script>

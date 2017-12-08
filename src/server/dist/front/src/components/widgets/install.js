@@ -9,6 +9,9 @@ import Table from "../../output/table"
 import Tableview from "./set/tableView"
 
 import Ajaxview from "./set/ajaxView"
+
+import Eventview from "./set/eventView"
+import Right from "../right"
 export default (Vue, options) => {
     // 常用组件
     Vue.component('Droppable', Droppable)
@@ -18,4 +21,6 @@ export default (Vue, options) => {
     Vue.component('Table', Table)         
     Vue.component('Tableview', Tableview)
     Vue.component('Ajaxview', Ajaxview)
+    Vue.component('Eventview', Eventview)
+    Vue.component('Right', Right)
 }

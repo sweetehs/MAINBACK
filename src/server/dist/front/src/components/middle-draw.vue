@@ -5,10 +5,10 @@
             display: inline-block;
         }	
         &.widget-layout{
-            background: #eee;	
+            background: #F5F7FA;	
             box-sizing: border-box;					
-            border-radius: 4px;
-            box-shadow: 0 0 2px #333;
+            border-radius: 4px;            
+            border: 1px solid #D8DCE5;
             display: flex;
             position: relative;
             &.widget-active{
@@ -43,7 +43,7 @@
 <template>
   <div class="draw-wrapper" @contextmenu="preventRight">
         <div class="action-wrapper">
-            <Action ref="action" @initAll="initAll"></Action>
+            <Middleaction ref="action" @initAll="initAll"></Middleaction>
         </div>
         <div class="draw-inner"></div>
     </div>
@@ -54,7 +54,7 @@
     import {
 		mount
 	} from "./widgets/mount";	
-    import Action from "./action"
+    import Middleaction from "./middle-action"
     export default {
 		data() {
 			return {
@@ -96,7 +96,7 @@
 			}
 		},
 		components:{
-			Action: Action
+			Middleaction: Middleaction
 		}
 	}
 </script>

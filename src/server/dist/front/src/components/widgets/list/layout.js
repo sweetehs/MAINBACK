@@ -23,7 +23,7 @@ export default function init() {
             return `<Layout :style='defaultData.styles'></Layout>`
         },
         view: () => {
-            return `<Layoutview @changeStatus="changeStatus" :pvue="pvue" :defaultData="defaultData" :staticConfig="staticConfig"></Layoutview>`
+            return `<Layoutview :pvue="pvue" :defaultData="defaultData" :staticConfig="staticConfig"></Layoutview>`
         }
     }
 }

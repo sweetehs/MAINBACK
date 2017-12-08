@@ -21,8 +21,8 @@
 		flex-shrink: 0;
   }
   .main-middle {  
-    flex: 1;
-    height: 100%;
+    flex: 1;    
+    overflow: hidden;
   }
 }
 

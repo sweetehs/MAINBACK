@@ -27,12 +27,10 @@
                 this.defaultData.table.cells.push({
                     label:"label",
                     prop:"prop"
-                })               
-                this.$emit('changeStatus',this.defaultData) 
+                })                               
             },
             deleteCell(index){
-                this.defaultData.table.cells.splice(index,1)
-                this.$emit('changeStatus',this.defaultData) 
+                this.defaultData.table.cells.splice(index,1)                
             }
         }
     }

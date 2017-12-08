@@ -23,7 +23,7 @@
                 <el-input :disabled="!defaultData.temp.isFlexValue||!defaultData.temp.isFlex" @change="changeFlexValue" size="small" v-model="defaultData.styles.flex"></el-input>                     
             </div>           
         </div> 
-        <Stylec v-if="pvue" :disabled="disabled" @changeStatus="changeStatus" :styles="defaultData.styles"></Stylec>
+        <Stylec v-if="pvue" :disabled="disabled" :styles="defaultData.styles"></Stylec>
     </div>
 </template>
 
@@ -45,8 +45,7 @@
             this.changeFlexBox()                  
         },
         methods:{          
-            changeFlexBox(){      
-                
+            changeFlexBox(){                      
                 if(this.defaultData.temp.isFlex){   
                     this.defaultData.styles.display = "flex"                 
                     this.changeFlexValue()                  
@@ -56,8 +55,7 @@
                     this.disabled.height = false
                     this.disabled.width = false                      
                     this.disabled = Object.assign({},this.disabled)
-                }
-                this.$emit("changeStatus",this.defaultData)            
+                }                
             },
             changeFlexValue(){                        
                 if(this.defaultData.temp.isFlexValue && this.pvue){
@@ -76,14 +74,7 @@
                     this.disabled.height = false
                     this.disabled.width = false
                 }
-                this.disabled = Object.assign({},this.disabled)
-                this.$emit("changeStatus",this.defaultData)  
-            },
-            changeStatus(data){                                                                 
-                if(util.isObject(data)){
-                    Object.assign(this.defaultData.styles,data)                                        
-                }
-                this.$emit("changeStatus",this.defaultData)            
+                this.disabled = Object.assign({},this.disabled)                
             }
         }
     };

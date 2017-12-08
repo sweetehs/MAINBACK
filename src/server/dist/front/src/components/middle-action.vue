@@ -143,7 +143,7 @@
                 })
             },
             deletei() {
-                this.$store.dispatch("delete", this.actionId)
+                this.$store.dispatch("pageDelete", this.actionId)
                 util.getParentByClassName(this.target, "widget-wrapper").remove()
             },
             allscreen() {                                

@@ -22,7 +22,7 @@ export default function init() {
             return `<el-input :style='defaultData.styles' :placeholder="defaultData.attr.placeholder" :type="defaultData.attr.type" :size="defaultData.attr.size" :readonly="true"></el-input>`
         },
         view: () => {
-            return `<Commonview v-on:changeStatus="changeStatus" :defaultData="defaultData" :staticConfig="staticConfig"></Commonview>`
+            return `<Commonview :defaultData="defaultData" :staticConfig="staticConfig"></Commonview>`
         }
     }
 }

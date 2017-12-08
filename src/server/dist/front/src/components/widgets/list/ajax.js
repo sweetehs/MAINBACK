@@ -3,15 +3,17 @@ export default function init() {
         name: 'ajax',
         data: {
             ajaxData: {
+                describe: "ajax接口描述",
                 url: "http://www.test.com",
                 method: "get",
                 params: [{
-                    key: "key"
+                    key: "key",
+                    test: "testValue"
                 }]
             }
         },
         view: () => {
-            return `<Ajaxview :defaultData="defaultData"></Ajaxview>`
+            return `<Ajaxview :defaultData="defaultData" :disabled="false"></Ajaxview>`
         }
     }
 }
