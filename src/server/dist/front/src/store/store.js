@@ -8,7 +8,7 @@ const localAjax = localStorage.getItem("auto-produce-system-ajax") ? JSON.parse(
 var temp = [];
 const store = new Vuex.Store({
     plugins: [(store) => {
-        store.subscribe((mutation, state) => {            
+        store.subscribe((mutation, state) => {
             if (mutation.type.indexOf("ajax") !== -1) {
                 // ajax列表
                 localStorage.setItem("auto-produce-system-ajax", JSON.stringify(state.ajax))
@@ -119,6 +119,9 @@ const store = new Vuex.Store({
         ajaxUpdate(state, data) {
             const gdata = this.getters.getAjaxById(data.id)
             gdata.option.data = data.data
+        },
+        ajaxDelete(state, index) {
+            state.ajax.splice(index, 1)
         }
     },
     actions: {
@@ -145,6 +148,9 @@ const store = new Vuex.Store({
         },
         ajaxUpdate(context, data) {
             context.commit("ajaxUpdate", data)
+        },
+        ajaxDelete(context, index) {
+            context.commit("ajaxDelete", index)
         }
     }
 })

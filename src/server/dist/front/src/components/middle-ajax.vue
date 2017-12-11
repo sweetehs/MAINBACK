@@ -21,6 +21,18 @@
         margin: 5px;
         vertical-align: middle;
         text-align: center;
+        position: relative;
+       
+        &:not(:last-child) i{
+            // display: none;
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            font-size: 16px;
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #000;
+        }
     }
     .add{
         border: none;
@@ -39,7 +51,10 @@
 <template>
     <div class="ajax-wrapper">        
         <ul>
-            <li v-for="(item,index) in ajaxList" :key="index" :class="item.id" @click="view(item.id)">{{item.option.data.ajaxData.describe}}</li>
+            <li v-for="(item,index) in ajaxList" :key="index" :class="item.id" @click="view(item.id)">
+                {{item.option.data.ajaxData.describe}}
+                <i class="el-icon-close" @click="deletei(index,$event)"></i>
+            </li>
             <li class="add">
                 <i class="el-icon-plus" @click="add"></i>
             </li>
@@ -64,8 +79,15 @@
                 }
                 this.$store.dispatch("ajaxAdd", storeData)
             },
-            view(id){                                                               
-                mountView(Object.assign(ajaxWidget(),this.$store.getters.getAjaxById(id).option) ,{},(data)=>{                    
+            deletei(index,event){
+                this.$store.dispatch("ajaxDelete",index)
+                event.cancelBubble = true
+            },
+            view(id){          
+                var that = this                                                     
+                mountView(Object.assign(ajaxWidget(),this.$store.getters.getAjaxById(id).option) ,{
+                    store:this.$store
+                },(data)=>{                    
                     this.$store.dispatch("ajaxUpdate", {
                         id:id,
                         data:data
