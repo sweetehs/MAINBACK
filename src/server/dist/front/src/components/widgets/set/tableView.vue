@@ -4,6 +4,10 @@
 
 <template>
     <div>        
+        <div class="right-form-item">
+            <span class="text">describe：</span>
+            <el-input type="textarea" class="large" v-model="defaultData.table.describe"></el-input>               
+        </div>
         <div class="right-form-item" v-for="(item,index) in defaultData.table.cells" :key="index">
             <span class="text">name：</span>
             <el-input v-model="item.label"></el-input>   

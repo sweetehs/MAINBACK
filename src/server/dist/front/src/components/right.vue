@@ -64,23 +64,39 @@
 </style>
 
 <template>
-  <div class="right-wrapper">
+  <div class="right-wrapper">	  
 	  	<el-tabs class="event-tab" type="card" v-model="tabIndex">
 			<el-tab-pane label="Style" name="1">
 				<div class="right-style"></div>
 			</el-tab-pane>
-			<el-tab-pane label="Event" name="2">
+			<el-tab-pane label="Event" name="2" v-show="isShowTab">
 				<div class="right-event"></div>
 			</el-tab-pane>
 		</el-tabs> 
   </div>
 </template>
 <script>	
+	import Event from "../util/event"
 	export default {
 		data() {
 			return {
-				tabIndex:"1"
+				tabIndex:"1",
+				isShowTab:false
 			}
+		},
+		created(){			
+			var that = this
+			Event.eventRight.$on("showTab",()=>{
+				that.$el.querySelector(".el-tabs__header").style.display="block"
+				that.tabIndex = "1"
+			})
+			Event.eventRight.$on("hideTab",()=>{				
+				that.$el.querySelector(".el-tabs__header").style.display="none"
+				that.tabIndex = "1"
+			})			
+		},
+		mounted(){
+			this.$el.querySelector(".el-tabs__header").style.display="none"
 		}
 	}
 </script>

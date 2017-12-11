@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { Drop, Drag } from "dnd.js";
 import util from '../../util/util'
 import widgetConfig from "./config"
+import Event from "../../util/event"
 /*
 	里面有两个组件
 	公用option参数
@@ -147,7 +148,12 @@ var eventVue = ""
 export function mountView(option, odata, changeCallback) {
 	let $div1 = document.createElement("div")
 	document.getElementsByClassName("right-style")[0].appendChild($div1)
-	setVue.$destroy && setVue.$destroy()
+	setVue.$destroy && setVue.$destroy()	
+	if(option.name == "ajax"){
+		Event.eventRight.$emit("hideTab")
+	}else{
+		Event.eventRight.$emit("showTab")
+	}
 	setVue = new Vue({
 		template: option.view(),
 		el: $div1,
@@ -157,7 +163,7 @@ export function mountView(option, odata, changeCallback) {
 		watch: {
 			defaultData: {
 				deep: true,
-				handler(a, b) {
+				handler(a, b) {					
 					changeCallback && changeCallback(b)
 				}
 			}
@@ -173,11 +179,19 @@ export function mountView(option, odata, changeCallback) {
 	document.getElementsByClassName("right-event")[0].appendChild($div2)
 	eventVue.$destroy && eventVue.$destroy()	
 	eventVue = new Vue({
-		template: `<Eventview :store="store" :eventData="eventData"></Eventview>`,
-		el: $div2,
+		template: `<Eventview :store="store" :defaultData="defaultData"></Eventview>`,
+		el: $div2,	
+		watch: {
+			defaultData: {
+				deep: true,
+				handler(a, b) {					
+					changeCallback && changeCallback(b)
+				}
+			}
+		},
 		data() {			
 			return Object.assign({
-				eventData: option.data.event				
+				defaultData: option.data				
 			}, odata)
 		},				
 		destroyed() {

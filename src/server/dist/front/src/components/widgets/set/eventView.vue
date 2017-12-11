@@ -31,7 +31,7 @@
 <template>
     <div class="event-wrapper">
         <ul class="event-list">
-            <li v-for="(item,index) in eventData" :key="index">
+            <li v-for="(item,index) in defaultData.event" :key="index">
                 {{item.describe}}
                 <div>
                     <el-button @click="deletei(index)" size="mini" type="primary">删除</el-button>
@@ -47,66 +47,82 @@
             <div class="right-form-item">
                 <span class="text">type：</span>
                 <div class="content">
-                    <el-radio v-for="(er,index) in eventList" v-model="currentEdit.type" :key="index" :label="er">{{er}}</el-radio>
+                    <el-radio v-for="(er,index) in eventList" v-model="currentData.type" :key="index" :label="er">{{er}}</el-radio>
                 </div>
             </div>
             <div class="right-form-item">
                 <span class="text">describe：</span>
                 <div class="content">
-                    <el-input type="textarea" class="large"></el-input>
+                    <el-input type="textarea" class="large" v-model="currentData.describe"></el-input>
                 </div>
             </div>
-            <div v-for="(item,index) in currentEdit.action" :key="index">
-    
+            <div class="render-action"></div>
+            <div class="fn-align-center fn-mt10">
+                <el-button type="primary" size="large" @click="showAjaxDialog">增加ajax</el-button>
             </div>
         </div>
+        <el-dialog  title="ajax列表"  :visible.sync="isShowAddAjax" width="600px" >
+            <div class="fn-pointer" v-for="(item,index) in ajaxList" :key="index" @click="addAjax(item)">{{item.option.data.ajaxData.describe}}</div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     import Vue from "vue"
+    import util from "../../../util/util"
     export default {
-        data() {
+        data() {            
             return {
                 showDetail: false,
-                currentEdit: "",
-                eventList: ['click', 'change']
+                currentData: "",
+                eventList: ['click', 'change'],
+                isShowAddAjax:false,
+                ajaxList: this.store.state.ajax
             }
         },
-        props: ["store", "eventData"],
+        props: ["store", "defaultData"],
         methods: {
-            edit(data) {
-                var that = this
-                data.action.map((_d) => {
-                    // 暂时写死  ajax数据
-                    _d.detail = this.store.getters.getAjaxById(_d.id)
-                    setTimeout(() => {
-                        new Vue({
-                            template: `<Ajaxview :defaultData="defaultData" :disabled="true"></Ajaxview>`,
-                            el: this.$el.querySelector(".event" + _d.id),
-                            data() {
-                                // debugger;                                
-                                return {
-                                    defaultData: _d.detail.option.data
-                                }
+            _renderAction(){
+                this.currentData.action.map((_d) => {
+                    // // 暂时写死  ajax数据
+                    let $div = document.createElement("div")
+                    this.$el.querySelector(".render-action").appendChild($div)                                        
+                    new Vue({
+                        template: `<Ajaxview :defaultData="defaultData" :disabled="true"></Ajaxview>`,
+                        el: $div,
+                        data() {                                                 
+                            return {
+                                defaultData: _d.option.data
                             }
-                        })
-                    }, 50)
+                        }
+                    })                    
                 })
+            },
+            edit(data) {                       
                 this.showDetail = true
-                this.currentEdit = data
+                this.currentData = data
+                this._renderAction()
             },
             deletei(index) {
-                this.eventData.splice(index, 1)
+                this.defaultData.event.splice(index, 1)
             },
             eventAdd() {
-                this.currentEdit = {
+                this.currentData = {
                     type: "click",
                     describe: "请输入描述",
                     status: 'add',
                     action: []
                 }
+                this.defaultData.event.push(this.currentData)
                 this.showDetail = true;
+            },
+            showAjaxDialog(){                
+                this.isShowAddAjax = true
+            },
+            addAjax(item){                     
+                this.currentData.action.push(util.deepClone(item))
+                this._renderAction()
+                this.isShowAddAjax = false
             }
         }
     }

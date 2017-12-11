@@ -21,8 +21,7 @@
                 <el-radio v-model="defaultData.ajaxData.method" label="get" :disabled="disabled">get</el-radio>
                 <el-radio v-model="defaultData.ajaxData.method" label="post" :disabled="disabled">post</el-radio>                                  
             </div>
-        </div>
-       
+        </div>       
         <div class="right-form-item">
             <span class="text">params：</span>
             <div class="content">
@@ -34,16 +33,38 @@
                 <i class="el-icon-plus" @click="add" v-if="!disabled"></i>
             </div>
         </div>
+        <div v-if="disabled">
+            <div class="right-form-item">
+                <span class="text">关联：</span>
+                <div class="content">
+                    <span v-if="defaultData.ajaxData.link">
+                        {{defaultData.ajaxData.link.id}}
+                    </span>  
+                    <el-button type="primary" size="mini" @click="showLinkTable">关联table</el-button>
+                </div>
+            </div>                       
+        </div>        
+        <div>
+            <el-dialog  title="可以关联的table"  :visible.sync="isShowLinkTable" width="600px" >
+                <div class="fn-pointer" v-for="(item,index) in tableList" @click="link(item)" :key="index">{{item.option.data.table.describe}}</div>
+            </el-dialog>
+        </div>
     </div>
 </template>
 <script>
+    import store from "../../../store/store"
     export default{
-        data(){            
+        data(){                        
             return {
-
+                isShowLinkTable:false,
+                tableList:store.getters.getWidgetByType("table")    
             }
         },
         props:["defaultData","disabled"],
+        /*
+            disabled=false 代表自己的数据
+            disabled=true   代表供外部查看的数据可以有关联功能
+        */
         methods:{
             deletei(index){
                 this.defaultData.ajaxData.params.splice(index,1)
@@ -53,6 +74,13 @@
                     key: "key",
                     test: "testValue"
                 })
+            },
+            showLinkTable(){                
+                this.isShowLinkTable = true
+            },
+            link(item){
+                this.isShowLinkTable = false
+                this.defaultData.ajaxData.link = item                
             }
         }
     }

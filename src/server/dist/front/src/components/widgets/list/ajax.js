@@ -9,7 +9,8 @@ export default function init() {
                 params: [{
                     key: "key",
                     test: "testValue"
-                }]
+                }],
+                link: {}
             }
         },
         view: () => {

@@ -17,9 +17,8 @@ export default function init() {
             event: []
             // [{                
             //     describe: "搜索列表",
+            //     type:"click",
             //     action: [{
-            //         name: "click",
-            //         id: "c62217550"
             //     }]
             // }]
         },

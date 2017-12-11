@@ -3,10 +3,10 @@ const staticConfig = {
 }
 export default function init() {
     return {
-        name: 'table',
-        tag: 'el-table',
+        name: 'table',        
         data: {
             table: {
+                describe: "描述",
                 cells: [{
                     prop: "name",
                     label: "名字"

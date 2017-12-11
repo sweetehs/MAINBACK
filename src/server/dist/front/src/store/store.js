@@ -36,9 +36,9 @@ const store = new Vuex.Store({
         })
     }],
     state: {
-        widgets: localWidgets,
-        historyindex: 0,
-        ajax: localAjax
+        widgets: localWidgets,// 页面布局
+        historyindex: 0, // 前进后退数据index
+        ajax: localAjax// ajax 列表
     },
     getters: {
         getById: (state, getters) => (id) => {
@@ -56,6 +56,15 @@ const store = new Vuex.Store({
                 return data.id === id
             })[0]
         },
+        getWidgetByType: (state, getters) => (type) => {
+            let arr = []
+            util.loop(state.widgets, (data) => {
+                if(data.option.name == type){
+                    arr.push(data)
+                }
+            })
+            return arr;
+        }
     },
     mutations: {
         pageAdd(state, data) {
