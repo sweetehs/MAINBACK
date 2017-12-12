@@ -3,7 +3,7 @@ const staticConfig = {
 }
 export default function init() {
     return {
-        name: 'table',        
+        name: 'table',
         data: {
             table: {
                 describe: "描述",
@@ -13,13 +13,6 @@ export default function init() {
                 }, {
                     prop: "sex",
                     label: "姓别"
-                }],
-                list: [{
-                    name: "黑崎一护",
-                    sex: "男"
-                }, {
-                    name: "大蛇丸",
-                    sex: "男"
                 }]
             },
             attr: {

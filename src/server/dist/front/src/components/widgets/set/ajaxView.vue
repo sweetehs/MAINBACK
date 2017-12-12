@@ -54,7 +54,7 @@
 <script>
     import store from "../../../store/store"
     export default{
-        data(){                        
+        data(){                      
             return {
                 isShowLinkTable:false,
                 tableList:store.getters.getWidgetByType("table")    
@@ -79,6 +79,7 @@
                 this.isShowLinkTable = true
             },
             link(item){
+                debugger;
                 this.isShowLinkTable = false
                 this.defaultData.ajaxData.link = item                
             }

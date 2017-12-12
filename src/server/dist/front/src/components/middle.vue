@@ -28,12 +28,12 @@
 			<Middledraw></Middledraw>
 			<!-- <Middleajax></Middleajax> -->
 		</div>
-		<div class="set-wrapper"><Right></Right></div>		
+		<div class="set-wrapper"><Middleright></Middleright></div>		
 	</div>	
 </template>
 
 <script>		
-	// import Right from "./Right"
+	import Middleright from "./middle-right"
 	import Middledraw from "./middle-draw"
 	import Middleajax from "./middle-ajax"			
 	export default {
@@ -48,7 +48,7 @@
 		components:{			
 			Middleajax:Middleajax,
 			Middledraw:Middledraw,
-			// Right:Right
+			Middleright:Middleright
 		}
 	}
 </script>

@@ -1,7 +1,5 @@
 exports.baseData = {
-    c0:{"styles":{"height":"100%","width":"100%","display":"flex","flex":1,"flex-direction":"column"}},
-    c63624592:{"styles":{"height":"100%","width":"100%","display":"flex","flex":1,"flex-direction":"column"}},
-    c9237123:{"attr":{"placeholder":"请输入文字","type":"input","size":"medium","readonly":false},"styles":{}},
-    c47049475:{"attr":{"type":"primary","size":"medium","text":"默认"},"styles":{}},
-    c96902875:{"table":{"cells":[{"prop":"name","label":"名字"},{"prop":"sex","label":"姓别"}],"list":[{"name":"黑崎一护","sex":"男"},{"name":"大蛇丸","sex":"男"}]},"attr":{},"styles":{}},
+    c55668459:{"attr":{"type":"primary","size":"medium","text":"默认"},"styles":{},"event":[{"type":"click","describe":"请输入描述","status":"add","action":[{"id":"c61707066","option":{"name":"ajax","data":{"ajaxData":{"describe":"ajax接口描述","url":"http://www.test.com","method":"post","params":[{"key":"key","test":"testValue"}],"link":{"id":"c51940114","pid":"c0","option":{"name":"table","data":{"table":{"describe":"描述","cells":[{"prop":"name","label":"名字"},{"prop":"sex","label":"姓别"}]},"attr":{},"styles":{}},"staticConfig":{},"btmp":"<Table {{table|table}}></Table>"},"children":[]}}}}}]}]},
+    c51940114:{"table":{"describe":"描述","cells":[{"prop":"name","label":"名字"},{"prop":"sex","label":"姓别"}]},"attr":{},"styles":{}},
+    c0:{"styles":{"height":"100%","width":"100%","display":"flex","flex":"none","flex-direction":"column"}},
 }

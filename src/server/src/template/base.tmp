@@ -1,22 +1,22 @@
-<style>
-    
-</style>
-
+<template>
+    <div>
+<%-template%>
+    </div>
+</template>
 <script>
     import {baseData} from "./data.js"
+    <%-axios%>
     export default{
         data(){
             return {
                 baseData: baseData
             }
         },
-        method:{
-
+        methods:{
+<%-methods.join(',\n')%>
         }
     }
 </script>
-<template>
-    <div>
-<%-template%>
-    </div>
-</template>
+<style>
+    
+</style>

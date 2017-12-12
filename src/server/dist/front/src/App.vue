@@ -15,9 +15,8 @@ div {
 
 <script>
 import Vue from "vue";
-import Left from "./components/left";
-import Middle from "./components/middle";
-import Right from "./components/right";
+import Left from "./components/left"
+import Middle from "./components/middle"
 export default {
   name: "app",
   data() {

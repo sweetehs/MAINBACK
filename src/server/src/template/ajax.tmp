@@ -1,0 +1,17 @@
+axios({
+    method: '<%-method%>',
+    url: '<%-url%>',
+    data: {
+        <%
+            params.map((_p)=>{
+                %><%-_p.key%>:'test',<%
+            })  
+        %>
+    },
+    success(ajaxData){
+
+    },
+    error(){
+
+    }
+})

@@ -71,7 +71,8 @@
     import Vue from "vue"
     import util from "../../../util/util"
     export default {
-        data() {            
+        data() {         
+            debugger;   
             return {
                 showDetail: false,
                 currentData: "",
@@ -86,7 +87,8 @@
                 this.currentData.action.map((_d) => {
                     // // 暂时写死  ajax数据
                     let $div = document.createElement("div")
-                    this.$el.querySelector(".render-action").appendChild($div)                                        
+                    this.$el.querySelector(".render-action").appendChild($div)          
+                    debugger;                              
                     new Vue({
                         template: `<Ajaxview :defaultData="defaultData" :disabled="true"></Ajaxview>`,
                         el: $div,

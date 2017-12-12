@@ -10,7 +10,7 @@ export default function init() {
                     key: "key",
                     test: "testValue"
                 }],
-                link: {}
+                link: ""
             }
         },
         view: () => {

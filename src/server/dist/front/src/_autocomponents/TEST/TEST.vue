@@ -1,27 +1,40 @@
-<style>
-    
-</style>
-
+<template>
+    <div>
+        <layout :style="baseData['c0'].styles">
+            <el-button  @click="c55668459click" :style="baseData['c55668459'].styles" type="primary" size="medium">默认</el-button>
+            <Table :ajaxd='c51940114model' :table="baseData['c51940114'].table"></Table>
+        </layout>
+    </div>
+</template>
 <script>
     import {baseData} from "./data.js"
+    import axios from 'axios'
     export default{
         data(){
             return {
                 baseData: baseData
             }
         },
-        method:{
-
+        methods:{
+        
+            c55668459click(){
+                axios({
+                    method: 'post',
+                    url: 'http://www.test.com',
+                    data: {
+                        key:'test',
+                    },
+                    success(ajaxData){
+                
+                    },
+                    error(){
+                
+                    }
+                })
+            }
         }
     }
 </script>
-<template>
-    <div>
-<layout :style="baseData['c0'].styles">
-</layout><layout :style="baseData['c0'].styles">
-    <layout :style="baseData['c63624592'].styles">
-        <el-input :style="baseData['c9237123'].styles" placeholder="请输入文字" type="input" size="medium"  ></el-input>        <el-button :style="baseData['c47049475'].styles" type="primary" size="medium">默认</el-button>        <Table :table="baseData['c96902875'].table"></Table>
-    </layout>
-</layout>
-    </div>
-</template>
+<style>
+    
+</style>
