@@ -9,7 +9,8 @@
     export default{
         data(){
             return {
-                baseData: baseData
+                baseData: baseData,
+<%-initData.join(',\n')%>                                                
             }
         },
         methods:{

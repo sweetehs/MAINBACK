@@ -4,14 +4,16 @@ const ejs = require("ejs")
 var index = -1
 var renderData = {
     template: "",
-    methods: []
+    methods: [],
+    initData: []
 }
 var data = "\n"
 const init = () => {
     index = -1
     renderData = {
         template: "",
-        methods: []
+        methods: [],
+        initData: []
     }
     data = "\n"
 }
@@ -45,9 +47,13 @@ const loop = (list) => {
             let widgetTmp = `${space(index)}${ejs.render(_data.option.btmp, _data.option.data)}${i == list.length - 1 ? '' : '\n'}`
             let tag = widgetTmp.match(/<(.*?)\s{1}/)[0]
             // 如果是需要attr.isAjax 需要建立model
-            if(_data.option.name == "table"){
-                widgetTmp = widgetTmp.replace(tag, tag + `:ajaxd='${_data.id}model' `)
-            }            
+            if (_data.option.name == "table") {                
+                // 增加外部数据
+                let modelName = `${_data.id}model`
+                widgetTmp = widgetTmp.replace(tag, tag + `:ajaxd='${modelName}' `)
+                // 初始化数据                
+                renderData.initData.push(`${space(4)}${modelName}:''`)
+            }
             // event处理                        
             if (_data.option.data.event) {
                 renderData.axios = `import axios from 'axios'`
@@ -57,18 +63,19 @@ const loop = (list) => {
                     var _rData = {
                         eventTag: _data.id + _event.type,
                         fun: ""
-                    }                    
+                    }
                     renderEventData.push(_rData)
+                    // 标签加上事件
                     widgetTmp = widgetTmp.replace(tag, tag + ` @${_event.type}="${_rData.eventTag}" `)
                     // 事件主体处理
-                    _event.action.map((_action) => {                        
+                    _event.action.map((_action) => {
                         if (_action.option.name === "ajax") {
                             _rData.fun = handleSpace(renderSync('./ajax.tmp', _action.option.data.ajaxData), 2)
                         }
                     })
                     renderData.methods.push(handleSpace(renderSync('./event.tmp', {
                         event: renderEventData
-                    }),2))
+                    }), 2))
                 })
             }
             renderData.template += widgetTmp
