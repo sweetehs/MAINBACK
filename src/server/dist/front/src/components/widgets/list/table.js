@@ -18,6 +18,7 @@ export default function init() {
             attr: {
 
             },
+            event:[],
             styles: {}
         },
         staticConfig: staticConfig,

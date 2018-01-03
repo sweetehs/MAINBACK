@@ -71,8 +71,7 @@
     import Vue from "vue"
     import util from "../../../util/util"
     export default {
-        data() {         
-            debugger;   
+        data() {                     
             return {
                 showDetail: false,
                 currentData: "",

@@ -1,10 +1,8 @@
 <template>
     <div>
         <layout :style="baseData['c0'].styles">
-            <el-button  @click="c55668459click" :style="baseData['c55668459'].styles" type="primary" size="medium">默认</el-button>
-            <Table :ajaxd='c789350model' :table="baseData['c789350'].table"></Table>
-            <Table :ajaxd='c51940114model' :table="baseData['c51940114'].table"></Table>
-            <el-button  @click="c82636735click" :style="baseData['c82636735'].styles" type="primary" size="medium">默认</el-button>
+            <el-button  @click="c46312686click" :style="baseData['c46312686'].styles" type="primary" size="medium">默认</el-button>
+            <Table :ajaxd='c80654796model' :table="baseData['c80654796'].table"></Table>
         </layout>
     </div>
 </template>
@@ -15,29 +13,12 @@
         data(){
             return {
                 baseData: baseData,
-                c789350model:'',
-                c51940114model:''                                                
+                c80654796model:''                                                
             }
         },
         methods:{
         
-            c55668459click(){
-                axios({
-                    method: 'post',
-                    url: 'http://www.test.com',
-                    data: {
-                        key:'test',
-                    },
-                    success(ajaxData){
-                
-                    },
-                    error(){
-                
-                    }
-                })
-            },
-        
-            c82636735click(){
+            c46312686click(){
                 axios({
                     method: 'post',
                     url: 'http://www.test.com',

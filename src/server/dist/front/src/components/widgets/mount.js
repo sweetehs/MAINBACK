@@ -184,8 +184,7 @@ export function mountView(option, odata, changeCallback) {
 		watch: {
 			defaultData: {
 				deep: true,
-				handler(a, b) {		
-					debugger;			
+				handler(a, b) {							
 					changeCallback && changeCallback(b)
 				}
 			}
