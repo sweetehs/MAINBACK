@@ -40,10 +40,10 @@
                     <span v-if="defaultData.ajaxData.link">
                         {{defaultData.ajaxData.link.id}}
                     </span>  
-                    <el-button type="primary" size="mini" @click="showLinkTable">关联table</el-button>
+                    <el-button type="primary" size="mini" @click="showLinkTable">关联</el-button>
                 </div>
             </div>                       
-        </div>        
+        </div>         
         <div>
             <el-dialog  title="可以关联的table"  :visible.sync="isShowLinkTable" width="600px" >
                 <div class="fn-pointer" v-for="(item,index) in tableList" @click="link(item)" :key="index">{{item.option.data.table.describe}}</div>
@@ -54,7 +54,8 @@
 <script>
     import store from "../../../store/store"
     export default{
-        data(){                      
+        data(){                    
+            debugger  
             return {
                 isShowLinkTable:false,
                 tableList:store.getters.getWidgetByType("table")    

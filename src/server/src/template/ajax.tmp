@@ -9,7 +9,9 @@ axios({
         %>
     },
     success(ajaxData){
-
+        <%if(link.id){%>
+            this.<%-link.id%>model = ajaxData.data.list
+        <%}%>
     },
     error(){
 

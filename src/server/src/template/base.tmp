@@ -10,11 +10,15 @@
         data(){
             return {
                 baseData: baseData,
-<%-initData.join(',\n')%>                                                
+<%-models.join(',\n')%>
             }
         },
         methods:{
-<%-methods.join(',\n')%>
+        <%methods.map((d)=>{%>
+            <%-d.funName%>(){
+<%-d.fun%>
+            },<%
+        })%>
         }
     }
 </script>

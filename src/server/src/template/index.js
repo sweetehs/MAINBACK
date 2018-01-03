@@ -2,18 +2,16 @@ const fs = require("fs")
 const path = require("path")
 const ejs = require("ejs")
 var index = -1
-var renderData = {
-    template: "",
-    methods: [],
-    initData: []
-}
+var renderData = {}
 var data = "\n"
 const init = () => {
     index = -1
     renderData = {
         template: "",
+        axios: "",
+        models: [],
+        created:[],
         methods: [],
-        initData: []
     }
     data = "\n"
 }
@@ -29,6 +27,16 @@ const handleSpace = (tmp, num) => {
     return tmp.split("\n").map((_t) => {
         return space(num) + _t
     }).join("\n")
+}
+const pushFun = ({funName,fun,p})=>{
+    p.filter((_d)=>{
+        if(_d.funName == funName){
+            return true
+        }
+    }).length == 0 && p.push({
+        funName: funName,
+        fun: fun
+    })
 }
 const loop = (list) => {
     index++
@@ -47,36 +55,39 @@ const loop = (list) => {
             let widgetTmp = `${space(index)}${ejs.render(_data.option.btmp, _data.option.data)}${i == list.length - 1 ? '' : '\n'}`
             let tag = widgetTmp.match(/<(.*?)\s{1}/)[0]
             // 如果是需要attr.isAjax 需要建立model
-            if (_data.option.name == "table") {                
-                // 增加外部数据
+            if (_data.option.name == "table") {
                 let modelName = `${_data.id}model`
                 widgetTmp = widgetTmp.replace(tag, tag + `:ajaxd='${modelName}' `)
-                // 初始化数据                
-                renderData.initData.push(`${space(4)}${modelName}:''`)
+                renderData.models.push(handleSpace(`${modelName}:''`, 4))
             }
+            
             // event处理                        
             if (_data.option.data.event) {
                 renderData.axios = `import axios from 'axios'`
                 let renderEventData = []
                 _data.option.data.event.map((_event) => {
-                    // 事件标签处理                    
-                    var _rData = {
-                        eventTag: _data.id + _event.type,
-                        fun: ""
-                    }
-                    renderEventData.push(_rData)
-                    // 标签加上事件
-                    widgetTmp = widgetTmp.replace(tag, tag + ` @${_event.type}="${_rData.eventTag}" `)
+                    var funArr = [];
                     // 事件主体处理
                     _event.action.map((_action) => {
                         if (_action.option.name === "ajax") {
-                            _rData.fun = handleSpace(renderSync('./ajax.tmp', _action.option.data.ajaxData), 2)
+                            let funName = _action.id + "ajax"
+                            pushFun({
+                                p:renderData.methods,
+                                funName: funName,
+                                fun: renderSync('./ajax.tmp', _action.option.data.ajaxData)
+                            })
+                            funArr.push(`this.${funName}()`)
                         }
                     })
-                    renderData.methods.push(handleSpace(renderSync('./event.tmp', {
-                        event: renderEventData
-                    }), 2))
-                })
+                    // 事件标签处理  
+                    let funName = _data.id + _event.type
+                    widgetTmp = widgetTmp.replace(tag, tag + ` @${_event.type}="${funName}" `)
+                    pushFun({
+                        p:renderData.methods,
+                        funName: funName,
+                        fun: funArr.join("\n")
+                    })
+                })   
             }
             renderData.template += widgetTmp
         }
@@ -104,6 +115,10 @@ exports.get = (name, listData) => {
     let baseUrl = __dirname + "/"
     init()
     loop(listData)
+    // 美化  处理
+    renderData.methods.map((_d) => {
+        _d.fun = handleSpace(_d.fun, 4)
+    })
     renderData.template = handleSpace(renderData.template, 2)
     ejs.renderFile(baseUrl + "./base.tmp", renderData, function (err, file) {
         writefile(name, name + ".vue", file)

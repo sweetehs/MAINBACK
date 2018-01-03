@@ -10,8 +10,9 @@ export default function init() {
                     key: "key",
                     test: "testValue"
                 }],
-                link: ""
-            }
+                link: {}
+            },
+            isCreated: false
         },
         view: () => {
             return `<Ajaxview :defaultData="defaultData" :disabled="false"></Ajaxview>`
