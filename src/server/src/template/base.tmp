@@ -9,11 +9,16 @@
     export default{
         data(){
             return {
-                baseData: baseData
+                baseData: baseData,
+<%-models.join(',\n')%>
             }
         },
         methods:{
-<%-methods.join(',\n')%>
+        <%methods.map((d)=>{%>
+            <%-d.funName%>(){
+<%-d.fun%>
+            },<%
+        })%>
         }
     }
 </script>

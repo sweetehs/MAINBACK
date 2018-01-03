@@ -2,11 +2,14 @@
     .event-list {
         li {
             height: 40px;
-            line-height: 40px;
+            // line-height: 40px;
             border-bottom: 1px solid #D8DCE5;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            .event-item-action{
+                width: 130px;
+            }
             &:last-child {
                 border: none
             }
@@ -32,8 +35,10 @@
     <div class="event-wrapper">
         <ul class="event-list">
             <li v-for="(item,index) in defaultData.event" :key="index">
-                {{item.describe}}
                 <div>
+                    {{item.describe}}
+                </div>
+                <div class="event-item-action">
                     <el-button @click="deletei(index)" size="mini" type="primary">删除</el-button>
                     <el-button @click="edit(item)" size="mini" type="primary">编辑</el-button>
                 </div>
@@ -61,7 +66,7 @@
                 <el-button type="primary" size="large" @click="showAjaxDialog">增加ajax</el-button>
             </div>
         </div>
-        <el-dialog  title="ajax列表"  :visible.sync="isShowAddAjax" width="600px" >
+        <el-dialog title="ajax列表" :visible.sync="isShowAddAjax" width="600px">
             <div class="fn-pointer" v-for="(item,index) in ajaxList" :key="index" @click="addAjax(item)">{{item.option.data.ajaxData.describe}}</div>
         </el-dialog>
     </div>
@@ -71,36 +76,34 @@
     import Vue from "vue"
     import util from "../../../util/util"
     export default {
-        data() {         
-            debugger;   
+        data() {
             return {
                 showDetail: false,
                 currentData: "",
-                eventList: ['click', 'change'],
-                isShowAddAjax:false,
+                eventList: ['click', 'change', 'created'],
+                isShowAddAjax: false,
                 ajaxList: this.store.state.ajax
             }
         },
         props: ["store", "defaultData"],
         methods: {
-            _renderAction(){
+            _renderAction() {
                 this.currentData.action.map((_d) => {
                     // // 暂时写死  ajax数据
                     let $div = document.createElement("div")
-                    this.$el.querySelector(".render-action").appendChild($div)          
-                    debugger;                              
+                    this.$el.querySelector(".render-action").appendChild($div)
                     new Vue({
                         template: `<Ajaxview :defaultData="defaultData" :disabled="true"></Ajaxview>`,
                         el: $div,
-                        data() {                                                 
+                        data() {
                             return {
                                 defaultData: _d.option.data
                             }
                         }
-                    })                    
+                    })
                 })
             },
-            edit(data) {                       
+            edit(data) {
                 this.showDetail = true
                 this.currentData = data
                 this._renderAction()
@@ -109,6 +112,7 @@
                 this.defaultData.event.splice(index, 1)
             },
             eventAdd() {
+                debugger
                 this.currentData = {
                     type: "click",
                     describe: "请输入描述",
@@ -118,10 +122,10 @@
                 this.defaultData.event.push(this.currentData)
                 this.showDetail = true;
             },
-            showAjaxDialog(){                
+            showAjaxDialog() {
                 this.isShowAddAjax = true
             },
-            addAjax(item){                     
+            addAjax(item) {
                 this.currentData.action.push(util.deepClone(item))
                 this._renderAction()
                 this.isShowAddAjax = false

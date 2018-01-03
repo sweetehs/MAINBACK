@@ -18,7 +18,8 @@ export default function init() {
             attr: {
 
             },
-            styles: {}
+            styles: {},
+            event: []
         },
         staticConfig: staticConfig,
         btmp: `<Table {{table|table}}></Table>`,

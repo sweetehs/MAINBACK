@@ -1,5 +1,0 @@
-<%event.map((d)=>{%>
-    <%-d.eventTag%>(){
-<%-d.fun%>
-    }<%
-})%>
