@@ -10,7 +10,7 @@ const init = () => {
         template: "",
         axios: "",
         models: [],
-        created:[],
+        created: [],
         methods: [],
     }
     data = "\n"
@@ -28,16 +28,17 @@ const handleSpace = (tmp, num) => {
         return space(num) + _t
     }).join("\n")
 }
-const pushFun = ({funName,fun,p})=>{
-    p.filter((_d)=>{
-        if(_d.funName == funName){
+const pushFun = ({ funName, fun }) => {
+    renderData.methods.filter((_d) => {
+        if (_d.funName == funName) {
             return true
         }
-    }).length == 0 && p.push({
+    }).length == 0 && renderData.methods.push({
         funName: funName,
         fun: fun
     })
 }
+const modelstag = ['table', 'input']
 const loop = (list) => {
     index++
     for (let i = 0; i < list.length; i++) {
@@ -54,13 +55,16 @@ const loop = (list) => {
             })
             let widgetTmp = `${space(index)}${ejs.render(_data.option.btmp, _data.option.data)}${i == list.length - 1 ? '' : '\n'}`
             let tag = widgetTmp.match(/<(.*?)\s{1}/)[0]
-            // 如果是需要attr.isAjax 需要建立model
-            if (_data.option.name == "table") {
+            // 如果是需要form表单 需要建立model
+            if(modelstag.indexOf(_data.option.name) !== -1){
                 let modelName = `${_data.id}model`
-                widgetTmp = widgetTmp.replace(tag, tag + `:ajaxd='${modelName}' `)
-                renderData.models.push(handleSpace(`${modelName}:''`, 4))
-            }
-            
+                renderData.models.push(`${modelName}:''`)
+                if (_data.option.name == "table") {               
+                    widgetTmp = widgetTmp.replace(tag, tag + `:ajaxd='${modelName}' `)
+                }else{
+                    widgetTmp = widgetTmp.replace(tag, tag + `v-model='${modelName}' `)
+                }
+            }           
             // event处理                        
             if (_data.option.data.event) {
                 renderData.axios = `import axios from 'axios'`
@@ -72,22 +76,25 @@ const loop = (list) => {
                         if (_action.option.name === "ajax") {
                             let funName = _action.id + "ajax"
                             pushFun({
-                                p:renderData.methods,
                                 funName: funName,
                                 fun: renderSync('./ajax.tmp', _action.option.data.ajaxData)
                             })
                             funArr.push(`this.${funName}()`)
                         }
                     })
-                    // 事件标签处理  
-                    let funName = _data.id + _event.type
-                    widgetTmp = widgetTmp.replace(tag, tag + ` @${_event.type}="${funName}" `)
-                    pushFun({
-                        p:renderData.methods,
-                        funName: funName,
-                        fun: funArr.join("\n")
-                    })
-                })   
+                    // 各种钩子判断
+                    if (_event.type == "created") {
+                        renderData.created = renderData.created.concat(funArr)
+                    } else {
+                        // 事件标签处理
+                        let funName = _data.id + _event.type
+                        widgetTmp = widgetTmp.replace(tag, tag + ` @${_event.type}="${funName}" `)
+                        pushFun({
+                            funName: funName,
+                            fun: funArr.join("\n")
+                        })
+                    }
+                })
             }
             renderData.template += widgetTmp
         }
@@ -118,6 +125,12 @@ exports.get = (name, listData) => {
     // 美化  处理
     renderData.methods.map((_d) => {
         _d.fun = handleSpace(_d.fun, 4)
+    })
+    renderData.created = renderData.created.map((_d) => {
+        return handleSpace(_d, 3)
+    })
+    renderData.models = renderData.models.map((_d) => {
+        return handleSpace(_d, 4)
     })
     renderData.template = handleSpace(renderData.template, 2)
     ejs.renderFile(baseUrl + "./base.tmp", renderData, function (err, file) {

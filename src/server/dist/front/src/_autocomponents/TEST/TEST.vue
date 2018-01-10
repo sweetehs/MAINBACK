@@ -1,8 +1,11 @@
 <template>
     <div>
         <layout :style="baseData['c0'].styles">
-            <el-button  @click="c10627978click" :style="baseData['c10627978'].styles" type="primary" size="medium">默认</el-button>
-            <Table :ajaxd='c70155063model' :table="baseData['c70155063'].table"></Table>
+            <layout :style="baseData['c12217585'].styles">
+                <el-input v-model='c52397920model' :style="baseData['c52397920'].styles" placeholder="请输入文字" type="input" size="medium"  ></el-input>
+                <el-button  @click="c24936243click" :style="baseData['c24936243'].styles" type="primary" size="medium">默认</el-button>
+                <Table :ajaxd='c50278639model' :table="baseData['c50278639'].table"></Table>
+            </layout>
         </layout>
     </div>
 </template>
@@ -13,30 +16,31 @@
         data(){
             return {
                 baseData: baseData,
-                c70155063model:''
+                c52397920model:'',
+                c50278639model:''
             }
         },
+        created(){
+
+        },
         methods:{
-        
-            c10653790ajax(){
+            c61707066ajax(){
                 axios({
-                    method: 'get',
+                    method: 'post',
                     url: 'http://www.test.com',
                     data: {
-                        key:'test',key:'test',
+                        key:'testValue',key:'testValue',
                     },
                     success(ajaxData){
-                        
-                            this.c70155063model = ajaxData.data.list
-                        
+                        this.c50278639model = ajaxData.data.list        
                     },
                     error(){
                 
                     }
                 })
             },
-            c10627978click(){
-                this.c10653790ajax()
+            c24936243click(){
+                this.c61707066ajax()
             },
         }
     }

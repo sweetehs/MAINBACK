@@ -28,7 +28,7 @@ export default function init() {
             return `<el-button :style='defaultData.styles' :type="defaultData.attr.type" :size="defaultData.attr.size">{{defaultData.attr.text}}</el-button>`
         },
         view: () => {
-            return `<Commonview :defaultData="defaultData" :staticConfig="staticConfig"></Commonview>`
+            return `<Buttonview :defaultData="defaultData" :staticConfig="staticConfig"></Buttonview>`
         }
     }
 }

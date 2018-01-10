@@ -25,8 +25,8 @@
 <template>
 	<div class="middle-wrapper">						
 		<div class="page-wrapper">
-			<Middledraw></Middledraw>
-			<!-- <Middleajax></Middleajax> -->
+			<Middledraw v-if="cview == 'editor'"></Middledraw>
+			<Middleajax v-if="cview == 'ajax'"></Middleajax>
 		</div>
 		<div class="set-wrapper"><Middleright></Middleright></div>		
 	</div>	
@@ -35,20 +35,26 @@
 <script>		
 	import Middleright from "./middle-right"
 	import Middledraw from "./middle-draw"
-	import Middleajax from "./middle-ajax"			
+	import Middleajax from "./middle-ajax"
+	import event from "../util/event"
 	export default {
 		data() {
 			return {
-				styles:{
-					height:"100%",
-					width:"100%"
-				}
+				cview:"editor"
 			};
+		},
+		created(){
+			event.eventMiddle.$on('changeview',(type)=>{
+				this.cview = type
+			})
 		},
 		components:{			
 			Middleajax:Middleajax,
 			Middledraw:Middledraw,
 			Middleright:Middleright
+		},
+		methods:{
+
 		}
 	}
 </script>

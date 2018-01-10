@@ -3,5 +3,6 @@ const getEvent = () => {
     return new Vue()
 }
 export default {
-    eventRight: getEvent()
+    eventRight: getEvent(),
+    eventMiddle: getEvent()
 }

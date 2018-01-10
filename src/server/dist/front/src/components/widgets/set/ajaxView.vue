@@ -54,8 +54,7 @@
 <script>
     import store from "../../../store/store"
     export default{
-        data(){                    
-            debugger  
+        data(){
             return {
                 isShowLinkTable:false,
                 tableList:store.getters.getWidgetByType("table")    
@@ -63,7 +62,7 @@
         },
         props:["defaultData","disabled"],
         /*
-            disabled=false 代表自己的数据
+            disabled=false  代表自己的数据
             disabled=true   代表供外部查看的数据可以有关联功能
         */
         methods:{
@@ -79,8 +78,7 @@
             showLinkTable(){                
                 this.isShowLinkTable = true
             },
-            link(item){
-                debugger;
+            link(item){                
                 this.isShowLinkTable = false
                 this.defaultData.ajaxData.link = item                
             }

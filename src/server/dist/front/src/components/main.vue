@@ -29,30 +29,36 @@
 </style>
 
 <template>
-  <div id="main">   
-    <div class="main-left"><Left></Left></div>
-    <div class="main-right">
-      <div class="main-top"></div>  		
-      <div class="main-middle">
-        <Middle></Middle>
-      </div>
-    </div>    
-  </div>
+	<div id="main">   
+		<div class="main-left">
+			<Left></Left>
+		</div>
+		<div class="main-right">  
+		<div class="main-top">
+			<Top></Top>
+		</div>  		
+		<div class="main-middle">
+			<Middle></Middle>
+		</div>
+		</div>    
+	</div>
 </template>
 
 <script>
 import Left from "./left"
 import Middle from "./middle"
+import Top from "./top"
 export default {
-  name: "app",
-  data() {
-    return {};
-  },
-  mounted() {},
-  components: {
-    Left: Left,
-    Middle: Middle
-  }
+	name: "app",
+	data() {
+		return {};
+	},
+	mounted() {},
+	components: {
+		Left: Left,
+		Middle: Middle,
+		Top:Top
+	}
 };
 </script>
 

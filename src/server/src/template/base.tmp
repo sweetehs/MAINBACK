@@ -13,8 +13,10 @@
 <%-models.join(',\n')%>
             }
         },
-        methods:{
-        <%methods.map((d)=>{%>
+        created(){
+<%-created.join(',\n')%>
+        },
+        methods:{<%methods.map((d)=>{%>
             <%-d.funName%>(){
 <%-d.fun%>
             },<%

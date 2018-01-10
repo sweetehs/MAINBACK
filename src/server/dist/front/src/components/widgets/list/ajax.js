@@ -11,8 +11,7 @@ export default function init() {
                     test: "testValue"
                 }],
                 link: {}
-            },
-            isCreated: false
+            }
         },
         view: () => {
             return `<Ajaxview :defaultData="defaultData" :disabled="false"></Ajaxview>`

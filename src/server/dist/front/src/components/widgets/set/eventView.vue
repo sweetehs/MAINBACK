@@ -88,6 +88,8 @@
         props: ["store", "defaultData"],
         methods: {
             _renderAction() {
+                // 清空div
+                this.$el.querySelector(".render-action").innerHTML = ""
                 this.currentData.action.map((_d) => {
                     // // 暂时写死  ajax数据
                     let $div = document.createElement("div")
@@ -103,7 +105,7 @@
                     })
                 })
             },
-            edit(data) {
+            edit(data) {                
                 this.showDetail = true
                 this.currentData = data
                 this._renderAction()
@@ -111,8 +113,7 @@
             deletei(index) {
                 this.defaultData.event.splice(index, 1)
             },
-            eventAdd() {
-                debugger
+            eventAdd() {                
                 this.currentData = {
                     type: "click",
                     describe: "请输入描述",

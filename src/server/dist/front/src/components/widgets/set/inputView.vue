@@ -1,15 +1,15 @@
 <template>
-    <div>        
+    <div>
         <div class="right-form-item">
-            <span class="text">文字：</span>
+            <span class="text">describe：</span>
             <div class="content">
-                <el-input v-model="defaultData.attr.text" placeholder="请输入内容"></el-input>           
-            </div>            
+                <el-input class="large" type="textarea" v-model="defaultData.describe" placeholder="请输入内容"></el-input>           
+            </div>             
         </div>
-        <div class="right-form-item " v-if="defaultData.attr.placeholder">
-            <span class="text">pholder：</span>            
+        <div class="right-form-item">
+            <span class="text">pholder：</span>
             <div class="content">
-                <el-input v-model="defaultData.attr.placeholder" placeholder="请输入内容"></el-input>           
+                <el-input class="large" v-model="defaultData.attr.placeholder" placeholder="请输入内容"></el-input>           
             </div>             
         </div>
         <div v-for="(item,key) in staticConfig1" :key="key" class="right-form-item fs">

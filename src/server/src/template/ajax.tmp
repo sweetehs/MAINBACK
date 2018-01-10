@@ -4,15 +4,13 @@ axios({
     data: {
         <%
             params.map((_p)=>{
-                %><%-_p.key%>:'test',<%
+                %><%-_p.key%>:'<%-_p.test%>',<%
             })  
         %>
     },
-    success(ajaxData){
-        <%if(link.id){%>
-            this.<%-link.id%>model = ajaxData.data.list
-        <%}%>
-    },
+    success(ajaxData){<%if(link.id){%>
+        this.<%-link.id%>model = ajaxData.data.list        
+    <%}%>},
     error(){
 
     }

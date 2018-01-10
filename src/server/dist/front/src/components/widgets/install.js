@@ -1,6 +1,7 @@
-import Droppable from "../../util/droppable"
+// import Droppable from "../../util/droppable"
 
-import Commonview from "./set/commonview"
+import Inputview from "./set/inputView"
+import Buttonview from "./set/buttonView"
 
 import Layout from "../../output/layout"
 import Layoutview from "./set/layoutView"
@@ -13,8 +14,8 @@ import Ajaxview from "./set/ajaxView"
 import Eventview from "./set/eventView"
 export default (Vue, options) => {
     // 常用组件
-    Vue.component('Droppable', Droppable)
-    Vue.component('Commonview', Commonview)    
+    Vue.component('Inputview', Inputview)
+    Vue.component('Buttonview', Buttonview)    
     Vue.component('Layout', Layout)    
     Vue.component('Layoutview', Layoutview)
     Vue.component('Table', Table)         
