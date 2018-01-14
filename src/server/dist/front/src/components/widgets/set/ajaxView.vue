@@ -26,11 +26,12 @@
             <span class="text">params：</span>
             <div class="content">
                 <p class="fn-iblock" v-for="(item,index) in defaultData.ajaxData.params" :key="index">
-                    <el-input class="fn-mb5" placeholder="请输入参数" v-model="item.key" :disabled="disabled"></el-input>                          
-                    <el-input class="fn-mb5" placeholder="请输入参数测试值" v-model="item.test" :disabled="disabled"></el-input>      
-                    <i v-if="!disabled" class="el-icon-minus" @click="deletei(index)"></i>                 
+                    <el-input placeholder="请输入参数" v-model="item.key" :disabled="disabled"></el-input>                          
+                    <el-input placeholder="请输入参数测试值" v-model="item.test" :disabled="disabled"></el-input>      
+                    <i v-if="!disabled" class="el-icon-minus" @click="deletei(index)"></i>
+                    <i class="el-icon-plus" v-if="!disabled" @click="add()"></i>
                 </p>                   
-                <i class="el-icon-plus" @click="add" v-if="!disabled"></i>
+                <i class="el-icon-plus" v-if="disabled"  @click="showLinkForm()"></i>
             </div>
         </div>
         <div v-if="disabled">
@@ -45,8 +46,11 @@
             </div>                       
         </div>         
         <div>
-            <el-dialog  title="可以关联的table"  :visible.sync="isShowLinkTable" width="600px" >
+            <el-dialog title="可以关联的table"  :visible.sync="isShowLinkTable" width="600px" >
                 <div class="fn-pointer" v-for="(item,index) in tableList" @click="link(item)" :key="index">{{item.option.data.table.describe}}</div>
+            </el-dialog>
+            <el-dialog title="可以关联的form"  :visible.sync="isShowForms" width="600px" >
+                <el-radio v-for="(er,index) in linkForms" v-model="currentLinkRadio" :key="index" :label="er">{{er}}</el-radio>
             </el-dialog>
         </div>
     </div>
@@ -57,7 +61,11 @@
         data(){
             return {
                 isShowLinkTable:false,
-                tableList:store.getters.getWidgetByType("table")    
+                isShowForms:false,
+                tableList:store.getters.getWidgetByType("table"),
+                linkForms:['input','select'],
+                currentLinkRadio:'input',
+                linkFormList:[]
             }
         },
         props:["defaultData","disabled"],
@@ -75,10 +83,14 @@
                     test: "testValue"
                 })
             },
-            showLinkTable(){                
+            showLinkTable(){             
+                this.linkFormList = store.getters.getWidgetByType(this.currentLinkRadio)
                 this.isShowLinkTable = true
             },
-            link(item){                
+            showLinkForm(){
+                this.isShowForms = true
+            },
+            link(item){ 
                 this.isShowLinkTable = false
                 this.defaultData.ajaxData.link = item                
             }
