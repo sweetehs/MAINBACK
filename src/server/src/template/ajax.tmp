@@ -7,11 +7,7 @@ axios({
                 %><%-_p.key%>:'<%-_p.test%>',<%
             })  
         %>
-    },
-    success(ajaxData){<%if(link.id){%>
-        this.<%-link.id%>model = ajaxData.data.list        
-    <%}%>},
-    error(){
-
     }
-})
+}).then((ajaxData)=>{<%if(link.id){%>
+    this.<%-link.id%>model = ajaxData.data.data
+<%}%>})

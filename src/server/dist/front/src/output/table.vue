@@ -35,14 +35,11 @@
                 <th v-for="(item,index) in table.cells" :key="index">{{item.label}}</th>
             </thead>
             <tbody>
-                <tr v-for="(l,index) in table.list" :key="index">
-                    <td v-for="(c,index) in table.cells" :key="index">{{l[c.prop]}}</td>
+                <tr v-for="(l,index) in ajaxd" :key="index">
+                    <td v-for="(c,index) in table.cells" :key="index">{{l[table.cells[index].prop]}}</td>
                 </tr>
             </tbody>
         </table>
-        <!-- <el-table :data="table.list" border style="width: 100%">    
-            <el-table-column v-for="(item,index) in table.cells" :key="index" :prop="item.prop" :label="item.label"></el-table-column>    
-        </el-table> -->
     </div>
 </template>
 <script>
@@ -52,7 +49,7 @@
                
             }
         },
-        props:["table"]
+        props:["table","ajaxd"]
     }
 </script>
 

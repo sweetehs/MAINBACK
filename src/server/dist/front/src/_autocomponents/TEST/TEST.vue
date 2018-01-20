@@ -1,17 +1,17 @@
 <template>
     <div>
         <layout :style="baseData['c0'].styles">
-            <layout :style="baseData['c21721755'].styles">
-                <layout :style="baseData['c76734255'].styles">
-                    <el-button :style="baseData['c60490392'].styles" type="primary" size="medium">默认</el-button>
-                    <Table :ajaxd='c56509546model' :table="baseData['c56509546'].table"></Table>
-                    <el-input v-model='c84293572model' :style="baseData['c84293572'].styles" placeholder="请输入文字" type="input" size="medium"  ></el-input>
+            <layout :style="baseData['c89955637'].styles">
+                <layout :style="baseData['c93310791'].styles">
+                    <layout :style="baseData['c70799113'].styles">
+                        <el-button :style="baseData['c49583908'].styles" type="primary" size="medium">默认</el-button>
+                        <Table :ajaxd='c41809336model' :table="baseData['c41809336'].table"></Table>
+                    </layout>
                 </layout>
-            </layout>    <layout :style="baseData['c37444039'].styles">
-                <el-button  @click="c33802866click" :style="baseData['c33802866'].styles" type="primary" size="medium">默认</el-button>
-                <Table :ajaxd='c97018897model' :table="baseData['c97018897'].table"></Table>
-                <layout :style="baseData['c87442295'].styles">
-        </layout>
+            </layout>
+            <layout :style="baseData['c27648681'].styles">
+                <el-button :style="baseData['c75003973'].styles" type="primary" size="medium">默认</el-button>
+                <Table :ajaxd='c72974474model' :table="baseData['c72974474'].table"></Table>
             </layout>
         </layout>
     </div>
@@ -23,31 +23,14 @@
         data(){
             return {
                 baseData: baseData,
-                c56509546model:'',
-                c84293572model:'',
-                c97018897model:''
+                c41809336model:'',
+                c72974474model:''
             }
         },
         created(){
 
         },
         methods:{
-            c10653790ajax(){
-                axios({
-                    method: 'get',
-                    url: 'http://www.test.com',
-                    data: {
-                        key:'testValue',key:'testValue',
-                    },
-                    success(ajaxData){},
-                    error(){
-                
-                    }
-                })
-            },
-            c33802866click(){
-                this.c10653790ajax()
-            },
         }
     }
 </script>

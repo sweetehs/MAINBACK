@@ -47,7 +47,7 @@ const loop = (list) => {
         if (_data.option.layout == "layout") {
             renderData.template += `${space(index)}<layout :style="baseData['${_data.id}'].styles">${_data.children.length !== 0 ? '\n' : ''}`
             loop(_data.children)
-            renderData.template += `\n${_data.children.length !== 0 ? space(index) : ''}</layout>`
+            renderData.template += `\n${space(index)}</layout>${i == (list.length - 1) ? '' : '\n'}`
         } else {
             _data.option.btmp.match(/{{(.*?)}}/gi).map((str) => {
                 let strs = str.match(/^{{(.*?)}}$/)[1].split("|")
